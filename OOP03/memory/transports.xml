@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<shop>
+    <transports>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="bicycleAist">
+            <serialVersionUID>1</serialVersionUID>
+            <price>200</price>
+            <color>Red</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="bicycleStels">
+            <serialVersionUID>1</serialVersionUID>
+            <price>300</price>
+            <color>Red</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carVolkswagen">
+            <serialVersionUID>1</serialVersionUID>
+            <price>18000</price>
+            <color>Red</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carLada">
+            <serialVersionUID>1</serialVersionUID>
+            <price>6000</price>
+            <color>Red</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="bicycleAist">
+            <serialVersionUID>1</serialVersionUID>
+            <price>250</price>
+            <color>Green</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="bicycleStels">
+            <serialVersionUID>1</serialVersionUID>
+            <price>350</price>
+            <color>Green</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carVolkswagen">
+            <serialVersionUID>1</serialVersionUID>
+            <price>18500</price>
+            <color>Green</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carLada">
+            <serialVersionUID>1</serialVersionUID>
+            <price>6500</price>
+            <color>Green</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="bicycleAist">
+            <serialVersionUID>1</serialVersionUID>
+            <price>150</price>
+            <color>Blue</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="bicycleStels">
+            <serialVersionUID>1</serialVersionUID>
+            <price>250</price>
+            <color>Blue</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carVolkswagen">
+            <serialVersionUID>1</serialVersionUID>
+            <price>17500</price>
+            <color>Blue</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carLada">
+            <serialVersionUID>1</serialVersionUID>
+            <price>5500</price>
+            <color>Blue</color>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carVolkswagenImproved">
+            <serialVersionUID>1</serialVersionUID>
+            <price>19000</price>
+            <color>Grey</color>
+            <improvement>Chromed Sportline</improvement>
+        </transport>
+        <transport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carLadaImproved">
+            <serialVersionUID>1</serialVersionUID>
+            <price>7000</price>
+            <color>Violet</color>
+            <improvement>Sedan Baklazhan</improvement>
+        </transport>
+    </transports>
+</shop>
