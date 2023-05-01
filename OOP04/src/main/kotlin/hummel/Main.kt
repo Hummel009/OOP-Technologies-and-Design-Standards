@@ -55,26 +55,17 @@ object Shop {
 	}
 
 	private fun edit() {
-		println("Enter the name of the transport:")
-		val scan = Scanner(System.`in`)
-		val str = scan.nextLine()
-		var found = false
-
-		val currentMap = HashMap<Int, Transport>()
-		var i = 0
-		for (item in transport) {
-			if (item.getTheName() == str) {
-				currentMap[i++] = item
-				println("${i - 1} ${item.getTheInfo()}")
-				found = true
-			}
+		val arr = transport.toTypedArray()
+		for (i in arr.indices) {
+			println("$i. ${arr[i].getTheInfo()}")
 		}
-		if (!found) {
-			println("No info found")
+		println("Enter the number of the transport to edit:")
+		val scan = Scanner(System.`in`)
+		val num = scan.nextLine().toInt()
+		if (num > arr.size || num < 0) {
+			println("Error")
 		} else {
-			println("Select the transport to edit")
-			val num = scan.nextLine().toInt()
-			val transport = currentMap[num]
+			val transport = arr[num]
 			if (transport is Editable) {
 				println("Enter the new price")
 				val price = scan.nextLine().toInt()

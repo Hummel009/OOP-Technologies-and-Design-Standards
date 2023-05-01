@@ -161,41 +161,28 @@ object Shop {
 	}
 
 	private fun editItem() {
-		println("Enter the name of the transport:")
-		val scan = Scanner(System.`in`)
-		val str = scan.nextLine()
-		var found = false
-
-		val currentMap = HashMap<Int, CarBasic>()
-		var i = 0
-		for (item in transport) {
-			item as CarBasic
-			if (item.name == str) {
-				currentMap[i++] = item
-				println("${i - 1} ${item.getTheInfo()}")
-				found = true
-			}
+		val arr = transport.toTypedArray()
+		for (i in arr.indices) {
+			println("$i. ${arr[i].getTheInfo()}")
 		}
-		if (!found) {
-			println("No info found")
+		println("Enter the number of the transport to edit:")
+		val scan = Scanner(System.`in`)
+		val num = scan.nextLine().toInt()
+		if (num > arr.size || num < 0) {
+			println("Error")
 		} else {
-			println("Select the transport to edit")
-			val num = scan.nextLine().toInt()
-			val transport = currentMap[num]
-			if (transport != null) {
-				println("Enter the new price")
-				val price = scan.nextLine().toInt()
-				transport.price = price
-
-				println("Enter the new color")
-				val color = scan.nextLine()
-				transport.color = color
-
-				if (transport is Improvable) {
-					println("Enter the new improvement")
-					val improvement = scan.nextLine()
-					transport.setImprovement(improvement)
-				}
+			val transport = arr[num]
+			transport as CarBasic
+			println("Enter the new price")
+			val price = scan.nextLine().toInt()
+			println("Enter the new color")
+			val color = scan.nextLine()
+			transport.price = price
+			transport.color = color
+			if (transport is Improvable) {
+				println("Enter the new improvement")
+				val improvement = scan.nextLine()
+				transport.setImprovement(improvement)
 			}
 		}
 	}
