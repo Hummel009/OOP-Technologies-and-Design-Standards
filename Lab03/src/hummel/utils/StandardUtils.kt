@@ -8,17 +8,17 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
 object StandardUtils {
-	fun serialize(shop: Shop) {
+	fun serialize() {
 		val filename = "memory/transports.ser"
 		val outputStream = FileOutputStream(filename)
 		val objectOutputStream = ObjectOutputStream(outputStream)
-		objectOutputStream.writeObject(shop.transport)
+		objectOutputStream.writeObject(Shop.transport)
 		objectOutputStream.close()
 		outputStream.close()
 		println("List was serialized")
 	}
 
-	fun deserialize(shop: Shop) {
+	fun deserialize() {
 		try {
 			val filename = "memory/transports.ser"
 			val fileInputStream = FileInputStream(filename)
@@ -31,10 +31,10 @@ object StandardUtils {
 			}
 			objectInputStream.close()
 			fileInputStream.close()
-			shop.transport = transports
+			Shop.transport = transports
 			println("List was deserialized")
 		} catch (e: Exception) {
-			shop.transport = loadDefaultList()
+			Shop.transport = loadDefaultList()
 			println("Error. Default list is loaded")
 		}
 	}

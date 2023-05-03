@@ -26,12 +26,12 @@ object JsonUtils {
 		}
 	}
 
-	fun serialize(shop: Shop) {
+	fun serialize() {
 		val gson: Gson =
 			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, TransportJsonSerializer()).setPrettyPrinting().create()
 		val type: TypeToken<MutableList<Transport>> = object : TypeToken<MutableList<Transport>>() {}
 		val file = File("memory/transports.json")
-		val json = gson.toJson(shop.transport, type.type)
+		val json = gson.toJson(Shop.transport, type.type)
 		val writer = FileWriter(file)
 		writer.use {
 			it.write(json)
@@ -39,7 +39,7 @@ object JsonUtils {
 		println("List was serialized")
 	}
 
-	fun deserialize(shop: Shop) {
+	fun deserialize() {
 		val gson: Gson =
 			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, TransportJsonSerializer()).create()
 
@@ -68,11 +68,11 @@ object JsonUtils {
 					}
 					transports.add(obj)
 				}
-				shop.transport = transports
+				Shop.transport = transports
 				println("List was deserialized")
 			}
 		} catch (e: Exception) {
-			shop.transport = StandardUtils.loadDefaultList()
+			Shop.transport = StandardUtils.loadDefaultList()
 			println("Error. Default list is loaded")
 		}
 	}

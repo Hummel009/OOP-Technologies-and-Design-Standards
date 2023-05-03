@@ -11,8 +11,7 @@ import javax.xml.bind.annotation.XmlElementWrapper
 import javax.xml.bind.annotation.XmlRootElement
 
 fun main() {
-	val shop = Shop
-	shop.init()
+	Shop.init()
 	val scan = Scanner(System.`in`)
 	var type: String
 
@@ -22,17 +21,17 @@ fun main() {
 
 		when (type) {
 			"xml" -> {
-				XmlUtils.deserialize(shop)
+				XmlUtils.deserialize()
 				break@loop
 			}
 
 			"bin" -> {
-				StandardUtils.deserialize(shop)
+				StandardUtils.deserialize()
 				break@loop
 			}
 
 			"json" -> {
-				JsonUtils.deserialize(shop)
+				JsonUtils.deserialize()
 				break@loop
 			}
 		}
@@ -42,21 +41,21 @@ fun main() {
 		println("Enter the function:")
 
 		val command = scan.nextLine()
-		shop.functions[command]?.invoke()
+		Shop.functions[command]?.invoke()
 		if (command == "exit") {
 			break@loop
 		}
 		when (type) {
 			"xml" -> {
-				XmlUtils.serialize(shop)
+				XmlUtils.serialize()
 			}
 
 			"bin" -> {
-				StandardUtils.serialize(shop)
+				StandardUtils.serialize()
 			}
 
 			"json" -> {
-				JsonUtils.serialize(shop)
+				JsonUtils.serialize()
 			}
 		}
 	}
@@ -71,17 +70,28 @@ object Shop {
 	var transport: MutableList<Transport> = ArrayList()
 
 	fun init() {
-		functions["show"] = this::show
-		functions["edit"] = this::edit
-		functions["sell"] = this::sell
-		functions["name"] = this::searchByName
-		functions["color"] = this::searchByColor
-		functions["price"] = this::searchByPrice
+		functions["commands"] = this::showAllFunctions
+		functions["show"] = this::showAllItems
+		functions["sell"] = this::addItem
+		functions["edit"] = this::editItem
+		functions["search"] = this::searchForItem
 		functions["clear"] = { transport.clear() }
 		functions["load"] = { transport.addAll(StandardUtils.loadDefaultList()) }
 	}
+	
+	private fun showAllFunctions() {
+		for (item in functions.keys) {
+			println(item)
+		}
+	}
 
-	private fun edit() {
+	private fun showAllItems() {
+		for (item in transport) {
+			println(item.getTheInfo())
+		}
+	}
+
+	private fun editItem() {
 		val arr = transport.toTypedArray()
 		for (i in arr.indices) {
 			println("$i. ${arr[i].getTheInfo()}")
@@ -109,7 +119,7 @@ object Shop {
 		}
 	}
 
-	private fun sell() {
+	private fun addItem() {
 		println("Enter the name of the transport")
 		val scan = Scanner(System.`in`)
 		val name = scan.nextLine()
@@ -142,58 +152,43 @@ object Shop {
 		}
 	}
 
-	private fun show() {
-		for (item in transport) {
-			println(item.getTheInfo())
-		}
-	}
-
-	private fun searchByName() {
-		println("Enter the name of the transport")
+	private fun searchForItem() {
+		println("Enter the type of the search: name, price, color")
 		val scan = Scanner(System.`in`)
 		val str = scan.nextLine()
 		var found = false
-
-		for (item in transport) {
-			if (item.getTheName() == str) {
-				println(item.getTheInfo())
-				found = true
+		when (str) {
+			"name" -> {
+				println("Enter the name of the transport")
+				val comparing = scan.nextLine()
+				transport.forEach { item ->
+					if (item.getTheName() == comparing) {
+						println(item.getTheInfo())
+						found = true
+					}
+				}
 			}
-		}
 
-		if (!found) {
-			println("No info found")
-		}
-	}
-
-	private fun searchByColor() {
-		println("Enter the color of the transport")
-		val scan = Scanner(System.`in`)
-		val str = scan.nextLine()
-		var found = false
-
-		for (item in transport) {
-			if (item.getTheColor() == str) {
-				println(item.getTheInfo())
-				found = true
+			"price" -> {
+				println("Enter the price of the transport")
+				val comparing = scan.nextLine().toInt()
+				transport.forEach { item ->
+					if (item.getThePrice() == comparing) {
+						println(item.getTheInfo())
+						found = true
+					}
+				}
 			}
-		}
 
-		if (!found) {
-			println("No info found")
-		}
-	}
-
-	private fun searchByPrice() {
-		println("Enter the price of the transport")
-		val scan = Scanner(System.`in`)
-		val price = scan.nextInt()
-		var found = false
-
-		for (item in transport) {
-			if (item.getThePrice() == price) {
-				println(item.getTheInfo())
-				found = true
+			"color" -> {
+				println("Enter the name of the transport")
+				val comparing = scan.nextLine()
+				transport.forEach { item ->
+					if (item.getTheColor() == comparing) {
+						println(item.getTheInfo())
+						found = true
+					}
+				}
 			}
 		}
 
