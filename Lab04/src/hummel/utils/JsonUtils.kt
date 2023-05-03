@@ -27,7 +27,8 @@ object JsonUtils {
 	}
 
 	fun serialize() {
-		val gson = GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, Serializer()).setPrettyPrinting().create()
+		val gson =
+			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, Serializer()).setPrettyPrinting().create()
 		val type: TypeToken<MutableList<Transport>> = object : TypeToken<MutableList<Transport>>() {}
 		val file = File("memory/transports.json")
 		val json = gson.toJson(Shop.transport, type.type)
@@ -37,7 +38,8 @@ object JsonUtils {
 	}
 
 	fun deserialize() {
-		val gson = GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, Serializer()).setPrettyPrinting().create()
+		val gson =
+			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, Serializer()).setPrettyPrinting().create()
 
 		try {
 			val file = File("memory/transports.json")
@@ -52,10 +54,8 @@ object JsonUtils {
 					val name = item.get("className").asString
 					val className = StandardUtils.reflectAccess(name, name)
 					if (className != null) {
-						val obj = className.newInstance() as Transport
-						obj.color = color
-						obj.price = price
-
+						val obj =
+							className.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 						if (className == CarVolkswagenImproved::class.java || className == CarLadaImproved::class.java) {
 							val improvement = item.get("improvement").asString
 							obj as Improvable

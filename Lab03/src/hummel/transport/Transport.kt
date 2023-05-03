@@ -1,9 +1,9 @@
 package hummel.transport
 
 import java.io.Serializable
-import javax.xml.bind.annotation.XmlAccessType
-import javax.xml.bind.annotation.XmlAccessorType
 import javax.xml.bind.annotation.XmlSeeAlso
+import javax.xml.bind.annotation.XmlAccessorType
+import javax.xml.bind.annotation.XmlAccessType
 
 @XmlSeeAlso(
 	BicycleAist::class,
@@ -14,22 +14,10 @@ import javax.xml.bind.annotation.XmlSeeAlso
 	CarVolkswagenImproved::class
 )
 @XmlAccessorType(XmlAccessType.FIELD)
-open class Transport : Serializable {
+open class Transport(var price: Int = 0, var color: String = "Color", var name: String = "Name") : Serializable {
 	private val serialVersionUID = 1L
-
-	open fun getTheColor(): String {
-		return "no"
-	}
-
-	open fun getTheName(): String {
-		return "NULL"
-	}
-
-	open fun getThePrice(): Int {
-		return 0
-	}
-
+	
 	open fun getTheInfo(): String {
-		return "${getTheName()} (${getTheColor()}): ${getThePrice()}$"
+		return "$name ($color): $price$"
 	}
 }

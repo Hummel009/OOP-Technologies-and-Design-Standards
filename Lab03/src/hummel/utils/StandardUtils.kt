@@ -56,8 +56,8 @@ object StandardUtils {
 		transports.add(CarVolkswagen(17500, "Blue"))
 		transports.add(CarLada(5500, "Blue"))
 
-		transports.add(CarVolkswagenImproved(19000, "Grey", "Chromed Sportline"))
-		transports.add(CarLadaImproved(7000, "Violet", "Sedan Baklazhan"))
+		transports.add(CarVolkswagenImproved(19000, "Grey").setImprovement("Chromed Sportline"))
+		transports.add(CarLadaImproved(7000, "Violet").setImprovement("Sedan Baklazhan"))
 
 		return transports
 	}

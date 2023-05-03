@@ -1,6 +1,5 @@
 package hummel
 
-import hummel.optional.Editable
 import hummel.optional.Improvable
 import hummel.transport.*
 import hummel.utils.JsonUtils
@@ -78,7 +77,7 @@ object Shop {
 		functions["clear"] = { transport.clear() }
 		functions["load"] = { transport.addAll(StandardUtils.loadDefaultList()) }
 	}
-	
+
 	private fun showAllFunctions() {
 		for (item in functions.keys) {
 			println(item)
@@ -103,18 +102,16 @@ object Shop {
 			println("Error")
 		} else {
 			val transport = arr[num]
-			if (transport is Editable) {
-				println("Enter the new price")
-				val price = scan.nextLine().toInt()
-				println("Enter the new color")
-				val color = scan.nextLine()
-				transport.setThePrice(price)
-				transport.setTheColor(color)
-			}
+			println("Enter the new price")
+			val price = scan.nextLine().toInt()
+			println("Enter the new color")
+			val color = scan.nextLine()
+			transport.price = price
+			transport.color = color
 			if (transport is Improvable) {
 				println("Enter the new improvement")
 				val improvement = scan.nextLine()
-				transport.setTheImprovement(improvement)
+				transport.setImprovement(improvement)
 			}
 		}
 	}
@@ -133,19 +130,16 @@ object Shop {
 		}
 
 		if (className != null) {
-			val obj = className.newInstance() as Transport
-			if (obj is Editable) {
-				println("Enter the price of the transport")
-				val price = scan.nextLine().toInt()
-				println("Enter the color of the transport")
-				val color = scan.nextLine()
-				obj.setTheColor(color)
-				obj.setThePrice(price)
-			}
+			println("Enter the price of the transport")
+			val price = scan.nextLine().toInt()
+			println("Enter the color of the transport")
+			val color = scan.nextLine()
+			val obj =
+				className.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 			if (obj is Improvable) {
 				println("Enter the improvement of the transport")
 				val improvement = scan.nextLine()
-				obj.setTheImprovement(improvement)
+				obj.setImprovement(improvement)
 			}
 
 			transport.add(obj)
@@ -162,7 +156,7 @@ object Shop {
 				println("Enter the name of the transport")
 				val comparing = scan.nextLine()
 				transport.forEach { item ->
-					if (item.getTheName() == comparing) {
+					if (item.name == comparing) {
 						println(item.getTheInfo())
 						found = true
 					}
@@ -173,7 +167,7 @@ object Shop {
 				println("Enter the price of the transport")
 				val comparing = scan.nextLine().toInt()
 				transport.forEach { item ->
-					if (item.getThePrice() == comparing) {
+					if (item.price == comparing) {
 						println(item.getTheInfo())
 						found = true
 					}
@@ -184,7 +178,7 @@ object Shop {
 				println("Enter the name of the transport")
 				val comparing = scan.nextLine()
 				transport.forEach { item ->
-					if (item.getTheColor() == comparing) {
+					if (item.color == comparing) {
 						println(item.getTheInfo())
 						found = true
 					}
