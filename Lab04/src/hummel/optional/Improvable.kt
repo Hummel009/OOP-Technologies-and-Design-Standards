@@ -1,6 +1,8 @@
 package hummel.optional
 
+import hummel.transport.Transport
+
 interface Improvable {
-	fun getTheImprovement(): String
-	fun setTheImprovement(improvement: String)
+	fun getImprovement(): String
+	fun setImprovement(improvement: String): Transport
 }

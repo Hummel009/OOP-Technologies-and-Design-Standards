@@ -8,7 +8,7 @@ import java.util.*
 
 fun main() {
 	val scan = Scanner(System.`in`)
-	Shop.init()
+	Shop.reloadFunctions()
 
 	loop@ while (true) {
 		println("Enter the function:")
@@ -27,13 +27,13 @@ object Shop {
 	var transport: MutableList<Transport> = ArrayList()
 	var plugin = ""
 
-	fun init() {
+	fun reloadFunctions() {
 		functions.clear()
-		functions["commands"] = this::showAllCommands
+		functions["commands"] = this::showAllFunctions
 		functions["show"] = this::showAllItems
 		functions["sell"] = this::addItem
 		functions["edit"] = this::editItem
-		functions["search"] = this::search
+		functions["search"] = this::searchForItem
 		functions["clear"] = { transport.clear() }
 		functions["load"] = { transport.addAll(StandardUtils.loadDefaultList()) }
 		functions["deserialize"] = { JsonUtils.deserialize() }
@@ -61,15 +61,19 @@ object Shop {
 		println("Enter the name of the plugin:")
 		val scan = Scanner(System.`in`)
 		plugin = scan.nextLine()
-		init()
+		reloadFunctions()
 	}
 
-	private fun showAllCommands() {
-		functions.keys.forEach { println(it) }
+	private fun showAllFunctions() {
+		for (item in functions.keys) {
+			println(item)
+		}
 	}
 
 	private fun showAllItems() {
-		transport.forEach { println(it.getTheInfo()) }
+		for (item in transport) {
+			println(item.getTheInfo())
+		}
 	}
 
 	private fun editItem() {
@@ -120,7 +124,7 @@ object Shop {
 		}
 	}
 
-	private fun search() {
+	private fun searchForItem() {
 		println("Enter the type of the search: name, price, color")
 		val scan = Scanner(System.`in`)
 		val str = scan.nextLine()

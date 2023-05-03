@@ -1,34 +1,24 @@
 package hummel
 
-import hummel.optional.Editable
 import hummel.optional.Improvable
-import hummel.transport.CarLadaImproved
-import hummel.transport.CarVolkswagenImproved
 import hummel.transport.Transport
 import hummel.utils.JsonUtils
 import hummel.utils.StandardUtils
-import java.io.File
-import java.net.URLClassLoader
 import java.util.*
 
-
 fun main() {
-	val shop = Shop
 	val scan = Scanner(System.`in`)
-	println("Enter the name of the plugin:")
-	shop.plugin = scan.nextLine()
-	shop.init()
-
-	JsonUtils.deserialize(shop)
+	Shop.reloadFunctions()
 
 	loop@ while (true) {
 		println("Enter the function:")
 		val command = scan.nextLine()
-		shop.functions[command]?.invoke()
+
+		Shop.functions[command]?.invoke()
+
 		if (command == "exit") {
 			break@loop
 		}
-		JsonUtils.serialize(shop)
 	}
 }
 
@@ -37,24 +27,54 @@ object Shop {
 	var transport: MutableList<Transport> = ArrayList()
 	var plugin = ""
 
-	fun init() {
-		functions["show"] = this::show
-		functions["edit"] = this::edit
-		functions["sell"] = this::sell
-		functions["name"] = this::searchByName
-		functions["color"] = this::searchByColor
-		functions["price"] = this::searchByPrice
+	fun reloadFunctions() {
+		functions.clear()
+		functions["commands"] = this::showAllFunctions
+		functions["show"] = this::showAllItems
+		functions["sell"] = this::addItem
+		functions["edit"] = this::editItem
+		functions["search"] = this::searchForItem
 		functions["clear"] = { transport.clear() }
 		functions["load"] = { transport.addAll(StandardUtils.loadDefaultList()) }
+		functions["deserialize"] = { JsonUtils.deserialize() }
+		functions["serialize"] = { JsonUtils.serialize() }
+		functions["plugin"] = this::loadPlugin
+
+		if (plugin != "") {
+			val className = StandardUtils.reflectAccess("plugin.Loader", "plugin.Loader")
+
+			if (className != null) {
+				try {
+					val loadMethod = className.getDeclaredMethod("load")
+					val loaderInstance = className.newInstance()
+					loadMethod.invoke(loaderInstance)
+				} catch (e: Exception) {
+					println("This plugin has no new functions")
+				}
+			}
+		}
 	}
 
-	private fun show() {
+	private fun loadPlugin() {
+		println("Enter the name of the plugin:")
+		val scan = Scanner(System.`in`)
+		plugin = scan.nextLine()
+		reloadFunctions()
+	}
+
+	private fun showAllFunctions() {
+		for (item in functions.keys) {
+			println(item)
+		}
+	}
+
+	private fun showAllItems() {
 		for (item in transport) {
 			println(item.getTheInfo())
 		}
 	}
 
-	private fun edit() {
+	private fun editItem() {
 		val arr = transport.toTypedArray()
 		for (i in arr.indices) {
 			println("$i. ${arr[i].getTheInfo()}")
@@ -66,71 +86,79 @@ object Shop {
 			println("Error")
 		} else {
 			val transport = arr[num]
-			if (transport is Editable) {
-				println("Enter the new price")
-				val price = scan.nextLine().toInt()
-				println("Enter the new color")
-				val color = scan.nextLine()
-				transport.setThePrice(price)
-				transport.setTheColor(color)
-			}
+			println("Enter the new price")
+			val price = scan.nextLine().toInt()
+			println("Enter the new color")
+			val color = scan.nextLine()
+			transport.price = price
+			transport.color = color
 			if (transport is Improvable) {
 				println("Enter the new improvement")
 				val improvement = scan.nextLine()
-				transport.setTheImprovement(improvement)
+				transport.setImprovement(improvement)
 			}
 		}
 	}
 
-	private fun sell() {
+	private fun addItem() {
 		println("Enter the name of the transport")
 		val scan = Scanner(System.`in`)
 		val name = scan.nextLine()
-
-		var className: Class<*>? = null
-
-		try {
-			className = Class.forName("hummel.transport.$name")
-		} catch (e: Exception) {
-			try {
-				val pluginFile = File(plugin)
-				val classLoader = URLClassLoader(arrayOf(pluginFile.toURI().toURL()))
-				className = classLoader.loadClass("plugin.$name")
-			} catch (e: Exception) {
-				println("Transport wasn't found")
-			}
-		}
+		val className = StandardUtils.reflectAccess("hummel.transport.$name", "plugin.$name")
 
 		if (className != null) {
-			val obj = className.newInstance() as Transport
-			if (obj is Editable) {
-				println("Enter the price of the transport")
-				val price = scan.nextLine().toInt()
-				println("Enter the color of the transport")
-				val color = scan.nextLine()
-				obj.setTheColor(color)
-				obj.setThePrice(price)
-			}
+			println("Enter the price of the transport")
+			val price = scan.nextLine().toInt()
+			println("Enter the color of the transport")
+			val color = scan.nextLine()
+			val obj =
+				className.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 			if (obj is Improvable) {
 				println("Enter the improvement of the transport")
 				val improvement = scan.nextLine()
-				obj.setTheImprovement(improvement)
+				obj.setImprovement(improvement)
 			}
-
 			transport.add(obj)
 		}
 	}
 
-	private fun searchByName() {
-		println("Enter the name of the transport")
+	private fun searchForItem() {
+		println("Enter the type of the search: name, price, color")
 		val scan = Scanner(System.`in`)
 		val str = scan.nextLine()
 		var found = false
+		when (str) {
+			"name" -> {
+				println("Enter the name of the transport")
+				val comparing = scan.nextLine()
+				transport.forEach { item ->
+					if (item.name == comparing) {
+						println(item.getTheInfo())
+						found = true
+					}
+				}
+			}
 
-		for (item in transport) {
-			if (item.getTheName() == str) {
-				println(item.getTheInfo())
-				found = true
+			"price" -> {
+				println("Enter the price of the transport")
+				val comparing = scan.nextLine().toInt()
+				transport.forEach { item ->
+					if (item.price == comparing) {
+						println(item.getTheInfo())
+						found = true
+					}
+				}
+			}
+
+			"color" -> {
+				println("Enter the name of the transport")
+				val comparing = scan.nextLine()
+				transport.forEach { item ->
+					if (item.color == comparing) {
+						println(item.getTheInfo())
+						found = true
+					}
+				}
 			}
 		}
 
@@ -138,41 +166,4 @@ object Shop {
 			println("No info found")
 		}
 	}
-
-	private fun searchByColor() {
-		println("Enter the color of the transport")
-		val scan = Scanner(System.`in`)
-		val str = scan.nextLine()
-		var found = false
-
-		for (item in transport) {
-			if (item.getTheColor() == str) {
-				println(item.getTheInfo())
-				found = true
-			}
-		}
-
-		if (!found) {
-			println("No info found")
-		}
-	}
-
-	private fun searchByPrice() {
-		println("Enter the price of the transport")
-		val scan = Scanner(System.`in`)
-		val price = scan.nextInt()
-		var found = false
-
-		for (item in transport) {
-			if (item.getThePrice() == price) {
-				println(item.getTheInfo())
-				found = true
-			}
-		}
-
-		if (!found) {
-			println("No info found")
-		}
-	}
-
 }
