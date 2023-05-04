@@ -64,11 +64,11 @@ object Shop {
 
 	fun init() {
 		functions.clear()
-		functions["commands"] = this::showAllCommands
+		functions["commands"] = this::showAllFunctions
 		functions["show"] = this::showAllItems
 		functions["sell"] = this::addItem
 		functions["edit"] = this::editItem
-		functions["search"] = this::search
+		functions["search"] = this::searchForItem
 		functions["clear"] = { transport.clear() }
 		functions["load"] = { transport.addAll(StandardUtils.loadDefaultList()) }
 		functions["deserialize"] = { JsonUtils.deserialize() }
@@ -102,19 +102,25 @@ object Shop {
 
 		val car1 = carPool.acquire()
 		val car2 = carPool.acquire()
+		val car3 = carPool.acquire()
 
 		println(car1)
 		println(car2)
+		println(car3)
+		carPool.release(car3)
 		carPool.release(car2)
 		carPool.release(car1)
 		val car5 = carPool.acquire()
 		val car6 = carPool.acquire()
+		val car7 = carPool.acquire()
 		println(car5)
 		println(car6)
+		println(car7)
 
 		val visitor = FunctionalVisitor()
 		car5.accept(visitor)
 		car6.accept(visitor)
+		car7.accept(visitor)
 
 		val listener = object : Listener {
 			override fun onSpeedChange(car: CarBasic, newSpeed: Int) {
@@ -148,8 +154,10 @@ object Shop {
 		init()
 	}
 
-	private fun showAllCommands() {
-		functions.keys.forEach { println(it) }
+	private fun showAllFunctions() {
+		for (item in functions.keys) {
+			println(item)
+		}
 	}
 
 	private fun showAllItems() {
@@ -209,7 +217,7 @@ object Shop {
 		}
 	}
 
-	private fun search() {
+	private fun searchForItem() {
 		println("Enter the type of the search: name, price, color")
 		val scan = Scanner(System.`in`)
 		val str = scan.nextLine()
