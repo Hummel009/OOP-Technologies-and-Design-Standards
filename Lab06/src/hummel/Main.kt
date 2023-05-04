@@ -27,7 +27,7 @@ object LadaPool {
 	private val allCars = mutableListOf<CarLada>()
 
 	init {
-		for (i in 1..3) {
+		repeat(3) {
 			val car = createNewCar()
 			availableCars.add(car)
 			allCars.add(car)
