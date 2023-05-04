@@ -81,11 +81,11 @@ object Shop {
 		}
 		println("Enter the number of the transport to edit:")
 		val scan = Scanner(System.`in`)
-		val num = scan.nextLine().toInt()
-		if (num > arr.size || num < 0) {
+		val id = scan.nextLine().toInt()
+		if (id !in arr.indices) {
 			println("Error")
 		} else {
-			val transport = arr[num]
+			val transport = arr[id]
 			println("Enter the new price")
 			val price = scan.nextLine().toInt()
 			println("Enter the new color")
