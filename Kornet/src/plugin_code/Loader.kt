@@ -1,12 +1,12 @@
 package plugin_code
 
-import hummel.Shop
+import kornet.WorldOfTanks
 import java.util.*
 
 class Loader {
 	fun load() {
-		Shop.functions["encode"] = this::encode
-		Shop.functions["decode"] = this::decode
+		WorldOfTanks.functions["encode"] = this::encode
+		WorldOfTanks.functions["decode"] = this::decode
 	}
 
 	private fun decode() {

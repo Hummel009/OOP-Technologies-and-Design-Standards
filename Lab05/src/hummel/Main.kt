@@ -43,7 +43,7 @@ object Shop {
 		functions["convertXmlJson"] = StandardUtils::convertXmlToJson
 
 		if (plugin != "") {
-			val className = StandardUtils.reflectAccess("plugin.Loader", "plugin.Loader")
+			val className = StandardUtils.reflectAccess("$plugin.Loader", "$plugin.Loader")
 
 			if (className != null) {
 				try {
@@ -106,7 +106,7 @@ object Shop {
 		println("Enter the name of the transport")
 		val scan = Scanner(System.`in`)
 		val name = scan.nextLine()
-		val className = StandardUtils.reflectAccess("hummel.transport.$name", "plugin.$name")
+		val className = StandardUtils.reflectAccess("hummel.transport.$name", "$plugin.$name")
 
 		if (className != null) {
 			println("Enter the price of the transport")

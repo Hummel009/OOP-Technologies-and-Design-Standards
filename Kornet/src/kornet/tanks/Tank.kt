@@ -5,15 +5,6 @@ import javax.xml.bind.annotation.XmlAccessType
 import javax.xml.bind.annotation.XmlAccessorType
 import javax.xml.bind.annotation.XmlSeeAlso
 
-@XmlSeeAlso(
-	TankLight::class,
-	TankMedium::class,
-	TankHeavy::class,
-	TankSuperLight::class,
-	TankSuperMedium::class,
-	TankSuperHeavy::class
-)
-@XmlAccessorType(XmlAccessType.FIELD)
 open class Tank(
 	var name: String = "T-34",
 	var nation: String = "USSR",
