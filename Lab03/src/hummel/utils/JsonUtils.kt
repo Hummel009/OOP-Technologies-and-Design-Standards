@@ -9,10 +9,9 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.lang.reflect.Type
-import java.net.URLClassLoader
 
 object JsonUtils {
-	class TransportJsonSerializer : JsonSerializer<Transport> {
+	class Serializer : JsonSerializer<Transport> {
 		override fun serialize(item: Transport, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
 			val jsonObject = JsonObject()
 			jsonObject.addProperty("price", item.price)
@@ -27,7 +26,7 @@ object JsonUtils {
 
 	fun serialize() {
 		val gson: Gson =
-			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, TransportJsonSerializer())
+			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, Serializer())
 				.setPrettyPrinting().create()
 		val type: TypeToken<MutableList<Transport>> = object : TypeToken<MutableList<Transport>>() {}
 		val file = File("memory/transports.json")
@@ -41,7 +40,7 @@ object JsonUtils {
 
 	fun deserialize() {
 		val gson: Gson =
-			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, TransportJsonSerializer()).create()
+			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, Serializer()).create()
 
 		try {
 			val file = File("memory/transports.json")
