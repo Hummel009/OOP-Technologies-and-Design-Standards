@@ -2,17 +2,16 @@
 
 import kornet.optional.Standard
 
-open class TankMedium(
-	name: String = "Panzerkampfwagen III",
-	nation: String = "Deutschland",
-	level: String = "3",
-	member: String = "3",
-	private var turningSpeed: String = "30",
-	private var margin: String = "5"
-) : Tank(name, nation, level, member), Standard {
+open class TankAmogus(
+	public var nation: String = "Deutschland",
+	public var name: String = "Panzerkampfwagen III",
+	public var member: String = "3",
+	public var level: String = "3",
+	public var margin: String = "5",
+	public var turningSpeed: String = "30"
+) : Standard {
 
-	override fun printInfo() {
-		super.printInfo()
+	fun printSomething() {
 		println("Скорость поворота шасси: $turningSpeed град/с\nЗапас прочности: $margin ед.")
 	}
 

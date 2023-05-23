@@ -1,6 +1,9 @@
 package kornet
 
-import kornet.tanks.*
+import kornet.tanks.AmogusAdapter
+import kornet.tanks.Tank
+import kornet.tanks.TankAmogus
+import kornet.tanks.TankHeavy
 import kornet.utils.JsonUtils
 import kornet.utils.StandardUtils
 import java.util.*
@@ -18,6 +21,42 @@ fun main() {
 		if (command == "exit") {
 			break@loop
 		}
+	}
+}
+
+
+object TankGarage {
+	private val availableTanks = mutableListOf<TankHeavy>()
+	private val allTanks = mutableListOf<TankHeavy>()
+
+	init {
+		repeat(3) {
+			val car = createNewCar()
+			availableTanks.add(car)
+			allTanks.add(car)
+		}
+	}
+
+	fun acquire(): TankHeavy {
+		val tank = availableTanks.firstOrNull()
+		return if (tank != null) {
+			availableTanks.remove(tank)
+			tank
+		} else {
+			val newCar = createNewCar()
+			allTanks.add(newCar)
+			newCar
+		}
+	}
+
+	fun release(car: TankHeavy) {
+		if (allTanks.contains(car)) {
+			availableTanks.add(car)
+		}
+	}
+
+	private fun createNewCar(): TankHeavy {
+		return TankHeavy()
 	}
 }
 
@@ -39,6 +78,7 @@ object WorldOfTanks {
 		functions["plugin"] = this::loadPlugin
 		functions["convertJsonXml"] = StandardUtils::convertJsonToXml
 		functions["convertXmlJson"] = StandardUtils::convertXmlToJson
+		functions["test"] = this::testPatterns
 
 		if (plugin != "") {
 			val className = StandardUtils.reflectAccess("$plugin.Loader", "$plugin.Loader")
@@ -53,6 +93,30 @@ object WorldOfTanks {
 				}
 			}
 		}
+	}
+
+	private fun testPatterns() {
+		val tankGarage = TankGarage
+
+		val tank1 = tankGarage.acquire()
+		val tank2 = tankGarage.acquire()
+		val tank3 = tankGarage.acquire()
+
+		println(tank1)
+		println(tank2)
+		println(tank3)
+		tankGarage.release(tank3)
+		tankGarage.release(tank2)
+		tankGarage.release(tank1)
+		val tank5 = tankGarage.acquire()
+		val tank6 = tankGarage.acquire()
+		val tank7 = tankGarage.acquire()
+		println(tank5)
+		println(tank6)
+		println(tank7)
+		tanks.clear()
+		tanks.add(AmogusAdapter(TankAmogus()));
+		showAllTanks()
 	}
 
 	private fun loadPlugin() {

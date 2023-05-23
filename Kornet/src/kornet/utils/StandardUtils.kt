@@ -65,7 +65,9 @@ object StandardUtils {
 			jsonArray.add(jsonObject)
 		}
 
-		val gson = GsonBuilder().registerTypeHierarchyAdapter(Tank::class.java, JsonUtils.Serializer()).setPrettyPrinting().create()
+		val gson =
+			GsonBuilder().registerTypeHierarchyAdapter(Tank::class.java, JsonUtils.Serializer()).setPrettyPrinting()
+				.create()
 		File("memory/transports.json").writeText(gson.toJson(jsonArray))
 	}
 
@@ -94,7 +96,9 @@ object StandardUtils {
 	}
 
 	fun convertJsonToXml() {
-		val gson = GsonBuilder().registerTypeHierarchyAdapter(Tank::class.java, JsonUtils.Serializer()).setPrettyPrinting().create()
+		val gson =
+			GsonBuilder().registerTypeHierarchyAdapter(Tank::class.java, JsonUtils.Serializer()).setPrettyPrinting()
+				.create()
 		val jsonArray = gson.fromJson(File("memory/transports.json").readText(), Array<Any>::class.java)
 
 		val docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
