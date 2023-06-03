@@ -1,4 +1,4 @@
-package hummel
+package hummel.transport
 
 open class Transport {
 	open fun getTheColor(): String {

@@ -1,6 +1,6 @@
-package hummel
+package hummel.transport
 
-open class BicycleAist(private var price: Int = 200, var color: String = "") : Transport() {
+open class BicycleStels(private var price: Int = 300, var color: String = "") : Transport() {
 	override fun getTheColor(): String {
 		return color
 	}
@@ -10,6 +10,6 @@ open class BicycleAist(private var price: Int = 200, var color: String = "") : T
 	}
 
 	override fun getTheName(): String {
-		return "Aist"
+		return "Stels"
 	}
 }

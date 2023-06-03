@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElementWrapper
 import javax.xml.bind.annotation.XmlRootElement
 
 fun main() {
-	Shop.init()
+	Shop.initFunctions()
 	val scan = Scanner(System.`in`)
 	var type: String
 
@@ -67,7 +67,7 @@ object Shop {
 	var transport: MutableList<Transport> = ArrayList()
 	val functions: MutableMap<String, () -> Unit> = HashMap()
 
-	fun init() {
+	fun initFunctions() {
 		functions["commands"] = this::showAllCommands
 		functions["show"] = this::showAllTransport
 		functions["sell"] = this::addTransport
