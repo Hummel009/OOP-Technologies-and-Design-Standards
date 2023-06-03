@@ -47,10 +47,10 @@ fun showAllTransport() {
 fun addTransport() {
 	println("Enter the class name of the transport:")
 	val scan = Scanner(System.`in`)
-	val name = scan.nextLine()
+	val className = scan.nextLine()
 
 	try {
-		val itemClass = Class.forName("hummel.$name")
+		val itemClass = Class.forName("hummel.$className")
 		println("Enter the price of the transport:")
 		val price = scan.nextLine().toInt()
 		println("Enter the color of the transport:")

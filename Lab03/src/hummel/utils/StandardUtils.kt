@@ -9,56 +9,54 @@ import java.io.ObjectOutputStream
 
 object StandardUtils {
 	fun serialize() {
-		val filename = "memory/transports.ser"
-		val outputStream = FileOutputStream(filename)
+		val outputStream = FileOutputStream("memory/transports.ser")
 		val objectOutputStream = ObjectOutputStream(outputStream)
 		objectOutputStream.writeObject(Shop.transport)
 		objectOutputStream.close()
 		outputStream.close()
-		println("List was serialized")
+		println("List was serialized.")
 	}
 
 	fun deserialize() {
 		try {
-			val filename = "memory/transports.ser"
-			val fileInputStream = FileInputStream(filename)
+			val fileInputStream = FileInputStream("memory/transports.ser")
 			val objectInputStream = ObjectInputStream(fileInputStream)
-			val obj = objectInputStream.readObject()
-			val transports: MutableList<Transport> = ArrayList()
+			val shop = objectInputStream.readObject()
+			val transport = ArrayList<Transport>()
 
-			if (obj is List<*>) {
-				obj.filterIsInstance<Transport>().forEach { transports.add(it) }
+			if (shop is List<*>) {
+				shop.filterIsInstance<Transport>().forEach { transport.add(it) }
 			}
 			objectInputStream.close()
 			fileInputStream.close()
-			Shop.transport = transports
-			println("List was deserialized")
+			Shop.transport = transport
+			println("List was deserialized.")
 		} catch (e: Exception) {
 			Shop.transport = loadDefaultList()
-			println("Error. Default list is loaded")
+			println("Error! Default list is loaded.")
 		}
 	}
 
 	fun loadDefaultList(): MutableList<Transport> {
-		val transports = ArrayList<Transport>()
-		transports.add(BicycleAist(color = "Red"))
-		transports.add(BicycleStels(color = "Red"))
-		transports.add(CarVolkswagen(color = "Red"))
-		transports.add(CarLada(color = "Red"))
+		val transport = ArrayList<Transport>()
+		transport.add(BicycleAist(color = "Red"))
+		transport.add(BicycleStels(color = "Red"))
+		transport.add(CarVolkswagen(color = "Red"))
+		transport.add(CarLada(color = "Red"))
 
-		transports.add(BicycleAist(250, "Green"))
-		transports.add(BicycleStels(350, "Green"))
-		transports.add(CarVolkswagen(18500, "Green"))
-		transports.add(CarLada(6500, "Green"))
+		transport.add(BicycleAist(250, "Green"))
+		transport.add(BicycleStels(350, "Green"))
+		transport.add(CarVolkswagen(18500, "Green"))
+		transport.add(CarLada(6500, "Green"))
 
-		transports.add(BicycleAist(150, "Blue"))
-		transports.add(BicycleStels(250, "Blue"))
-		transports.add(CarVolkswagen(17500, "Blue"))
-		transports.add(CarLada(5500, "Blue"))
+		transport.add(BicycleAist(150, "Blue"))
+		transport.add(BicycleStels(250, "Blue"))
+		transport.add(CarVolkswagen(17500, "Blue"))
+		transport.add(CarLada(5500, "Blue"))
 
-		transports.add(CarVolkswagenImproved(19000, "Grey").setImprovement("Chromed Sportline"))
-		transports.add(CarLadaImproved(7000, "Violet").setImprovement("Sedan Baklazhan"))
+		transport.add(CarVolkswagenImproved(19000, "Grey").setImprovement("Chromed Sportline"))
+		transport.add(CarLadaImproved(7000, "Violet").setImprovement("Sedan Baklazhan"))
 
-		return transports
+		return transport
 	}
 }
