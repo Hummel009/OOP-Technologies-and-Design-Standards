@@ -106,7 +106,7 @@ object Shop {
 			item.price = price
 			item.color = color
 			if (item is Improvable) {
-				println("Enter the new improvement")
+				println("Enter the new improvement:")
 				val improvement = scan.nextLine()
 				item.setImprovement(improvement)
 			}
@@ -116,36 +116,35 @@ object Shop {
 	}
 
 	private fun addTransport() {
-		println("Enter the class name of the transport")
+		println("Enter the class name of the transport:")
 		val scan = Scanner(System.`in`)
 		val className = scan.nextLine()
 
 		try {
-			val itemClass = Class.forName("hummel.transport.$className")
-			println("Enter the price of the transport")
+			val clazz = Class.forName("hummel.transport.$className")
+			println("Enter the price of the transport:")
 			val price = scan.nextLine().toInt()
-			println("Enter the color of the transport")
+			println("Enter the color of the transport:")
 			val color = scan.nextLine()
-			val item =
-				itemClass.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
+			val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 			if (item is Improvable) {
-				println("Enter the improvement of the transport")
+				println("Enter the improvement of the transport:")
 				val improvement = scan.nextLine()
 				item.setImprovement(improvement)
 			}
 
 			transport.add(item)
 		} catch (e: Exception) {
-			println("Unknown class!")
+			println("Class not found!")
 		}
 	}
 
 	private fun searchForTransport() {
 		println("Enter the type of the search (name, price, color):")
 		val scan = Scanner(System.`in`)
-		val str = scan.nextLine()
+		val type = scan.nextLine()
 		var found = false
-		when (str) {
+		when (type) {
 			"name" -> {
 				println("Enter the name of the transport:")
 				val name = scan.nextLine()
@@ -181,7 +180,7 @@ object Shop {
 		}
 
 		if (!found) {
-			println("No items found!")
+			println("Items not found!")
 		}
 	}
 }

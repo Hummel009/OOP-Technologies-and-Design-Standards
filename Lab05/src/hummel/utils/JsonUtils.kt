@@ -29,12 +29,12 @@ object JsonUtils {
 	fun serialize() {
 		val gson =
 			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, Serializer()).setPrettyPrinting().create()
-		val type: TypeToken<MutableList<Transport>> = object : TypeToken<MutableList<Transport>>() {}
+		val type = object : TypeToken<MutableList<Transport>>() {}
 		val file = File("memory/transports.json")
 		val json = gson.toJson(Shop.transport, type.type)
 		val writer = FileWriter(file)
 		writer.use { it.write(json) }
-		println("List was serialized")
+		println("List was serialized.")
 	}
 
 	fun deserialize() {
@@ -48,29 +48,29 @@ object JsonUtils {
 				val json = gson.fromJson(it, JsonArray::class.java)
 				val transports: MutableList<Transport> = ArrayList()
 				for (element in json) {
-					val item = element.asJsonObject
-					val price = item.get("price").asInt
-					val color = item.get("color").asString
-					val name = item.get("className").asString
-					val className = StandardUtils.reflectAccess(name, name)
-					if (className != null) {
-						val obj =
-							className.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
+					val jsonObject = element.asJsonObject
+					val price = jsonObject.get("price").asInt
+					val color = jsonObject.get("color").asString
+					val className = jsonObject.get("className").asString
+					val clazz = StandardUtils.accessClass(className, className)
+					if (clazz != null) {
+						val item = clazz.getConstructor(Int::class.java, String::class.java)
+							.newInstance(price, color) as Transport
 
-						if (className == CarVolkswagenImproved::class.java || className == CarLadaImproved::class.java) {
-							val improvement = item.get("improvement").asString
-							obj as Improvable
-							obj.setImprovement(improvement)
+						if (clazz == CarVolkswagenImproved::class.java || clazz == CarLadaImproved::class.java) {
+							val improvement = jsonObject.get("improvement").asString
+							item as Improvable
+							item.setImprovement(improvement)
 						}
-						transports.add(obj)
+						transports.add(item)
 					}
 				}
 				Shop.transport = transports
-				println("List was deserialized")
+				println("List was deserialized.")
 			}
 		} catch (e: Exception) {
 			Shop.transport = StandardUtils.loadDefaultList()
-			println("Error. Default list is loaded")
+			println("Error! Default list is loaded.")
 		}
 	}
 }

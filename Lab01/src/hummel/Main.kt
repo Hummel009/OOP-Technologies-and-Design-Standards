@@ -57,7 +57,7 @@ fun searchByName() {
 	}
 
 	if (!found) {
-		println("No items found!")
+		println("Items not found!")
 	}
 }
 
@@ -75,7 +75,7 @@ fun searchByColor() {
 	}
 
 	if (!found) {
-		println("No items found!")
+		println("Items not found!")
 	}
 }
 
@@ -93,7 +93,7 @@ fun searchByPrice() {
 	}
 
 	if (!found) {
-		println("No items found!")
+		println("Items not found!")
 	}
 }
 

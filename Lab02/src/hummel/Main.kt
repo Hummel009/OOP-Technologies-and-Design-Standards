@@ -50,17 +50,17 @@ fun addTransport() {
 	val className = scan.nextLine()
 
 	try {
-		val itemClass = Class.forName("hummel.$className")
+		val clazz = Class.forName("hummel.$className")
 		println("Enter the price of the transport:")
 		val price = scan.nextLine().toInt()
 		println("Enter the color of the transport:")
 		val color = scan.nextLine()
 
-		val item = itemClass.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
+		val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 
 		transport.add(item)
 	} catch (e: Exception) {
-		println("Unknown class!")
+		println("Class not found!")
 	}
 }
 
@@ -78,7 +78,7 @@ fun searchByName() {
 	}
 
 	if (!found) {
-		println("No items found!")
+		println("Items not found!")
 	}
 }
 
@@ -96,7 +96,7 @@ fun searchByColor() {
 	}
 
 	if (!found) {
-		println("No items found!")
+		println("Items not found!")
 	}
 }
 
@@ -114,7 +114,7 @@ fun searchByPrice() {
 	}
 
 	if (!found) {
-		println("No items found!")
+		println("Items not found!")
 	}
 }
 

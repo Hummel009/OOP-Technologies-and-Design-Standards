@@ -72,8 +72,8 @@
     "improvement": "Sedan Baklazhan"
   },
   {
-    "price": 9999,
-    "color": "hgufhgjf",
+    "price": 0,
+    "color": "0",
     "className": "plugin.CarRenault"
   }
 ]

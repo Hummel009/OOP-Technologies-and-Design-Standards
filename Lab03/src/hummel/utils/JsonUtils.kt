@@ -33,9 +33,7 @@ object JsonUtils {
 		val file = File("memory/transports.json")
 		val json = gson.toJson(Shop.transport, type.type)
 		val writer = FileWriter(file)
-		writer.use {
-			it.write(json)
-		}
+		writer.use { it.write(json) }
 		println("List was serialized.")
 	}
 
@@ -47,17 +45,17 @@ object JsonUtils {
 			val reader = FileReader(file)
 			reader.use {
 				val json = gson.fromJson(it, JsonArray::class.java)
-				val transports: MutableList<Transport> = ArrayList()
+				val transports = ArrayList<Transport>()
 				for (element in json) {
 					val jsonObject = element.asJsonObject
 					val price = jsonObject.get("price").asInt
 					val color = jsonObject.get("color").asString
 					val className = jsonObject.get("className").asString
-					val itemClass = Class.forName(className)
-					val item = itemClass.getConstructor(Int::class.java, String::class.java)
-						.newInstance(price, color) as Transport
+					val clazz = Class.forName(className)
+					val item =
+						clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 
-					if (itemClass == CarVolkswagenImproved::class.java || itemClass == CarLadaImproved::class.java) {
+					if (clazz == CarVolkswagenImproved::class.java || clazz == CarLadaImproved::class.java) {
 						val improvement = jsonObject.get("improvement").asString
 						item as Improvable
 						item.setImprovement(improvement)
