@@ -1,9 +1,9 @@
-package hummel
+package hummel.transport
 
-class CarLada(private var color: String) : CarTransport("Lada") {
-	private var price = 5000
+class BicycleAist(private var color: String) : BicycleTransport("Aist") {
+	private var price = 100
 
-	constructor(color: String, i: Int) : this(color) {
+	constructor(i: Int, color: String) : this(color) {
 		this.price = i
 	}
 

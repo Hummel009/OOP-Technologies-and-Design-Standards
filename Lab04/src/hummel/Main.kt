@@ -26,7 +26,7 @@ fun main() {
 
 object Shop {
 	val functions: MutableMap<String, () -> Unit> = HashMap()
-	var transport: MutableList<Transport> = ArrayList()
+	val transport: MutableList<Transport> = ArrayList()
 	var plugin: String = ""
 
 	fun reloadFunctions() {
@@ -38,7 +38,7 @@ object Shop {
 		functions["search"] = this::searchForTransport
 		functions["plugin"] = this::loadPlugin
 		functions["clear"] = { transport.clear() }
-		functions["load"] = { transport.addAll(StandardUtils.loadDefaultList()) }
+		functions["load"] = { transport.addAll(StandardUtils.getDefaultList()) }
 		functions["deserialize"] = { JsonUtils.deserialize() }
 		functions["serialize"] = { JsonUtils.serialize() }
 

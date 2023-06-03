@@ -16,14 +16,14 @@ object XmlUtils {
 	}
 
 	fun deserialize() {
+		Shop.transport.clear()
 		try {
 			val context = JAXBContext.newInstance(Transport::class.java, Shop::class.java)
 			val unmarshaller = context.createUnmarshaller()
-			val shop = unmarshaller.unmarshal(File("memory/transports.xml")) as Shop
-			Shop.transport = shop.transport
+			unmarshaller.unmarshal(File("memory/transports.xml")) as Shop
 			println("List was deserialized.")
 		} catch (e: Exception) {
-			Shop.transport = StandardUtils.loadDefaultList()
+			Shop.transport.addAll(StandardUtils.getDefaultList())
 			println("Error! Default list is loaded.")
 		}
 	}

@@ -24,26 +24,25 @@ object StandardUtils {
 		return clazz
 	}
 
-	fun loadDefaultList(): MutableList<Transport> {
-		val transport = ArrayList<Transport>()
-		transport.add(BicycleAist(color = "Red"))
-		transport.add(BicycleStels(color = "Red"))
-		transport.add(CarVolkswagen(color = "Red"))
-		transport.add(CarLada(color = "Red"))
+	fun getDefaultList(): MutableList<Transport> {
+		return arrayListOf(
+			BicycleAist(color = "Red"),
+			BicycleStels(color = "Red"),
+			CarVolkswagen(color = "Red"),
+			CarLada(color = "Red"),
 
-		transport.add(BicycleAist(250, "Green"))
-		transport.add(BicycleStels(350, "Green"))
-		transport.add(CarVolkswagen(18500, "Green"))
-		transport.add(CarLada(6500, "Green"))
+			BicycleAist(250, "Green"),
+			BicycleStels(350, "Green"),
+			CarVolkswagen(18500, "Green"),
+			CarLada(6500, "Green"),
 
-		transport.add(BicycleAist(150, "Blue"))
-		transport.add(BicycleStels(250, "Blue"))
-		transport.add(CarVolkswagen(17500, "Blue"))
-		transport.add(CarLada(5500, "Blue"))
+			BicycleAist(150, "Blue"),
+			BicycleStels(250, "Blue"),
+			CarVolkswagen(17500, "Blue"),
+			CarLada(5500, "Blue"),
 
-		transport.add(CarVolkswagenImproved(19000, "Grey").setImprovement("Chromed Sportline"))
-		transport.add(CarLadaImproved(7000, "Violet").setImprovement("Sedan Baklazhan"))
-
-		return transport
+			CarVolkswagenImproved(19000, "Grey").setImprovement("Chromed Sportline"),
+			CarLadaImproved(7000, "Violet").setImprovement("Sedan Baklazhan")
+		)
 	}
 }

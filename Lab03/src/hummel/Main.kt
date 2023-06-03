@@ -64,7 +64,7 @@ fun main() {
 object Shop {
 	@XmlElementWrapper(name = "transports", nillable = true)
 	@JvmStatic
-	var transport: MutableList<Transport> = ArrayList()
+	val transport: MutableList<Transport> = ArrayList()
 	val functions: MutableMap<String, () -> Unit> = HashMap()
 
 	fun initFunctions() {
@@ -74,7 +74,7 @@ object Shop {
 		functions["edit"] = this::editTransport
 		functions["search"] = this::searchForTransport
 		functions["clear"] = { transport.clear() }
-		functions["load"] = { transport.addAll(StandardUtils.loadDefaultList()) }
+		functions["load"] = { transport.addAll(StandardUtils.getDefaultList()) }
 	}
 
 	private fun showAllCommands() {

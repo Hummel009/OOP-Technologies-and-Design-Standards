@@ -40,13 +40,12 @@ object JsonUtils {
 	fun deserialize() {
 		val gson =
 			GsonBuilder().registerTypeHierarchyAdapter(Transport::class.java, Serializer()).setPrettyPrinting().create()
-
+		Shop.transport.clear()
 		try {
 			val file = File("memory/transports.json")
 			val reader = FileReader(file)
 			reader.use {
 				val json = gson.fromJson(it, JsonArray::class.java)
-				val transports = ArrayList<Transport>()
 				for (element in json) {
 					val jsonObject = element.asJsonObject
 					val price = jsonObject.get("price").asInt
@@ -61,14 +60,13 @@ object JsonUtils {
 							item as Improvable
 							item.setImprovement(improvement)
 						}
-						transports.add(item)
+						Shop.transport.add(item)
 					}
 				}
-				Shop.transport = transports
 				println("List was deserialized.")
 			}
 		} catch (e: Exception) {
-			Shop.transport = StandardUtils.loadDefaultList()
+			Shop.transport.addAll(StandardUtils.getDefaultList())
 			println("Error! Default list is loaded.")
 		}
 	}
