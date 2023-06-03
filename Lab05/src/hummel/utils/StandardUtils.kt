@@ -15,6 +15,26 @@ import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 
 object StandardUtils {
+	val defaultList: ArrayList<Transport> = arrayListOf(
+		BicycleAist(color = "Red"),
+		BicycleStels(color = "Red"),
+		CarVolkswagen(color = "Red"),
+		CarLada(color = "Red"),
+
+		BicycleAist(250, "Green"),
+		BicycleStels(350, "Green"),
+		CarVolkswagen(18500, "Green"),
+		CarLada(6500, "Green"),
+
+		BicycleAist(150, "Blue"),
+		BicycleStels(250, "Blue"),
+		CarVolkswagen(17500, "Blue"),
+		CarLada(5500, "Blue"),
+
+		CarVolkswagenImproved(19000, "Grey").setImprovement("Chromed Sportline"),
+		CarLadaImproved(7000, "Violet").setImprovement("Sedan Baklazhan")
+	)
+
 	fun convertXmlToJson() {
 		val docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 		val doc = docBuilder.parse(File("memory/transports.xml"))
@@ -165,27 +185,5 @@ object StandardUtils {
 			}
 		}
 		return clazz
-	}
-
-	fun getDefaultList(): MutableList<Transport> {
-		return arrayListOf(
-			BicycleAist(color = "Red"),
-			BicycleStels(color = "Red"),
-			CarVolkswagen(color = "Red"),
-			CarLada(color = "Red"),
-
-			BicycleAist(250, "Green"),
-			BicycleStels(350, "Green"),
-			CarVolkswagen(18500, "Green"),
-			CarLada(6500, "Green"),
-
-			BicycleAist(150, "Blue"),
-			BicycleStels(250, "Blue"),
-			CarVolkswagen(17500, "Blue"),
-			CarLada(5500, "Blue"),
-
-			CarVolkswagenImproved(19000, "Grey").setImprovement("Chromed Sportline"),
-			CarLadaImproved(7000, "Violet").setImprovement("Sedan Baklazhan")
-		)
 	}
 }

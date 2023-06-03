@@ -38,7 +38,7 @@ object Shop {
 		functions["search"] = this::searchForTransport
 		functions["plugin"] = this::loadPlugin
 		functions["clear"] = { transport.clear() }
-		functions["load"] = { transport.addAll(StandardUtils.getDefaultList()) }
+		functions["load"] = { transport.addAll(StandardUtils.defaultList) }
 		functions["deserialize"] = { JsonUtils.deserialize() }
 		functions["serialize"] = { JsonUtils.serialize() }
 

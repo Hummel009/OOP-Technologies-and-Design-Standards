@@ -30,7 +30,7 @@ object Shop {
 		functions["search"] = this::searchForTransport
 		functions["sell"] = this::addTransport
 		functions["clear"] = { transport.clear() }
-		functions["load"] = { transport.addAll(StandardUtils.getDefaultList()) }
+		functions["load"] = { transport.addAll(StandardUtils.defaultList) }
 	}
 
 	private fun showAllCommands() {

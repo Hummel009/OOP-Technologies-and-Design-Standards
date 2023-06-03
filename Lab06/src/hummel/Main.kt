@@ -4,6 +4,8 @@ import hummel.special.*
 import hummel.transport.*
 import hummel.utils.JsonUtils
 import hummel.utils.StandardUtils
+import java.io.File
+import java.net.URLClassLoader
 import java.util.*
 
 fun main() {
@@ -11,7 +13,7 @@ fun main() {
 	Shop.init()
 
 	loop@ while (true) {
-		println("Enter the function:")
+		println("Enter the command:")
 		val command = scan.nextLine()
 
 		Shop.functions[command]?.invoke()
@@ -59,36 +61,33 @@ object LadaPool {
 
 object Shop {
 	val functions: MutableMap<String, () -> Unit> = HashMap()
-	var transport: MutableList<Transport> = ArrayList()
-	var plugin = ""
+	val transport: MutableList<Transport> = ArrayList()
+	var plugin: String = ""
 
 	fun init() {
 		functions.clear()
-		functions["commands"] = this::showAllFunctions
-		functions["show"] = this::showAllItems
-		functions["sell"] = this::addItem
-		functions["edit"] = this::editItem
-		functions["search"] = this::searchForItem
-		functions["clear"] = { transport.clear() }
-		functions["load"] = { transport.addAll(StandardUtils.loadDefaultList()) }
-		functions["deserialize"] = { JsonUtils.deserialize() }
-		functions["serialize"] = { JsonUtils.serialize() }
+		functions["commands"] = this::showAllCommands
+		functions["show"] = this::showAllTransport
+		functions["sell"] = this::addTransport
+		functions["edit"] = this::editTransport
+		functions["search"] = this::searchForTransport
 		functions["plugin"] = this::loadPlugin
 		functions["test"] = this::testPatterns
-		functions["convertJsonXml"] = StandardUtils::convertJsonToXml
-		functions["convertXmlJson"] = StandardUtils::convertXmlToJson
+		functions["clear"] = { transport.clear() }
+		functions["load"] = { transport.addAll(StandardUtils.defaultList) }
+		functions["deserialize"] = { JsonUtils.deserialize() }
+		functions["serialize"] = { JsonUtils.serialize() }
 
 		if (plugin != "") {
-			val className = StandardUtils.reflectAccess("$plugin.Loader", "$plugin.Loader")
-
-			if (className != null) {
-				try {
-					val loadMethod = className.getDeclaredMethod("load")
-					val loaderInstance = className.newInstance()
-					loadMethod.invoke(loaderInstance)
-				} catch (e: Exception) {
-					println("This plugin has no new functions")
-				}
+			try {
+				val pluginFile = File(plugin)
+				val classLoader = URLClassLoader(arrayOf(pluginFile.toURI().toURL()))
+				val clazz = classLoader.loadClass("plugin.Loader")
+				val loadMethod = clazz.getDeclaredMethod("load")
+				val loaderInstance = clazz.newInstance()
+				loadMethod.invoke(loaderInstance)
+			} catch (e: Exception) {
+				println("This plugin don't exist or has no new functions. That's ok, if plugin contains only objects.")
 			}
 		}
 	}
@@ -98,21 +97,19 @@ object Shop {
 		val vw = carFactory.createCar(15000, "Lime", "CarVolkswagen");
 		transport.add(vw)
 
-		val carPool = LadaPool
-
-		val car1 = carPool.acquire()
-		val car2 = carPool.acquire()
-		val car3 = carPool.acquire()
+		val car1 = LadaPool.acquire()
+		val car2 = LadaPool.acquire()
+		val car3 = LadaPool.acquire()
 
 		println(car1)
 		println(car2)
 		println(car3)
-		carPool.release(car3)
-		carPool.release(car2)
-		carPool.release(car1)
-		val car5 = carPool.acquire()
-		val car6 = carPool.acquire()
-		val car7 = carPool.acquire()
+		LadaPool.release(car3)
+		LadaPool.release(car2)
+		LadaPool.release(car1)
+		val car5 = LadaPool.acquire()
+		val car6 = LadaPool.acquire()
+		val car7 = LadaPool.acquire()
 		println(car5)
 		println(car6)
 		println(car7)
@@ -154,13 +151,13 @@ object Shop {
 		init()
 	}
 
-	private fun showAllFunctions() {
+	private fun showAllCommands() {
 		for (item in functions.keys) {
 			println(item)
 		}
 	}
 
-	private fun showAllItems() {
+	private fun showAllTransport() {
 		val e = transport.iterator()
 		while (e.hasNext()) {
 			val it = e.next()
@@ -168,66 +165,66 @@ object Shop {
 		}
 	}
 
-	private fun editItem() {
+	private fun editTransport() {
 		val arr = transport.toTypedArray()
 		for (i in arr.indices) {
 			println("$i. ${arr[i].getTheInfo()}")
 		}
 		println("Enter the number of the transport to edit:")
 		val scan = Scanner(System.`in`)
-		val id = scan.nextLine().toInt()
-		if (id !in arr.indices) {
-			println("Error")
-		} else {
-			val transport = arr[id]
-			transport as CarBasic
-			println("Enter the new price")
+		val index = scan.nextLine().toInt()
+		try {
+			val item = arr[index]
+			println("Enter the new price:")
 			val price = scan.nextLine().toInt()
-			println("Enter the new color")
+			println("Enter the new color:")
 			val color = scan.nextLine()
-			transport.price = price
-			transport.color = color
-			if (transport is Improvable) {
-				println("Enter the new improvement")
+			item as CarBasic
+			item.price = price
+			item.color = color
+			if (item is Improvable) {
+				println("Enter the new improvement:")
 				val improvement = scan.nextLine()
-				transport.setImprovement(improvement)
+				item.setImprovement(improvement)
 			}
+		} catch (e: Exception) {
+			println("Wrong index!")
 		}
 	}
 
-	private fun addItem() {
-		println("Enter the name of the transport")
+	private fun addTransport() {
+		println("Enter the class name of the transport:")
 		val scan = Scanner(System.`in`)
-		val name = scan.nextLine()
-		val className = StandardUtils.reflectAccess("hummel.transport.$name", "$plugin.$name")
+		val className = scan.nextLine()
+		val clazz = StandardUtils.accessClass("hummel.transport.$className", "plugin.$className")
 
-		if (className != null) {
-			println("Enter the price of the transport")
+		if (clazz != null) {
+			println("Enter the price of the transport:")
 			val price = scan.nextLine().toInt()
-			println("Enter the color of the transport")
+			println("Enter the color of the transport:")
 			val color = scan.nextLine()
-			val obj =
-				className.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as CarBasic
-			if (obj is Improvable) {
-				println("Enter the improvement of the transport")
+			val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
+			if (item is Improvable) {
+				println("Enter the improvement of the transport:")
 				val improvement = scan.nextLine()
-				obj.setImprovement(improvement)
+				item.setImprovement(improvement)
 			}
-			transport.add(obj)
+			transport.add(item)
 		}
 	}
 
-	private fun searchForItem() {
-		println("Enter the type of the search: name, price, color")
+	private fun searchForTransport() {
+		println("Enter the type of the search (name, price, color):")
 		val scan = Scanner(System.`in`)
-		val str = scan.nextLine()
+		val type = scan.nextLine()
 		var found = false
-		when (str) {
+		when (type) {
 			"name" -> {
-				println("Enter the name of the transport")
-				val comparing = scan.nextLine()
-				transport.forEach { item ->
-					if ((item as CarBasic).name == comparing) {
+				println("Enter the name of the transport:")
+				val name = scan.nextLine()
+				for (item in transport) {
+					item as CarBasic
+					if (item.name == name) {
 						println(item.getTheInfo())
 						found = true
 					}
@@ -235,10 +232,11 @@ object Shop {
 			}
 
 			"price" -> {
-				println("Enter the price of the transport")
-				val comparing = scan.nextLine().toInt()
-				transport.forEach { item ->
-					if ((item as CarBasic).price == comparing) {
+				println("Enter the price of the transport:")
+				val price = scan.nextLine().toInt()
+				for (item in transport) {
+					item as CarBasic
+					if (item.price == price) {
 						println(item.getTheInfo())
 						found = true
 					}
@@ -246,10 +244,11 @@ object Shop {
 			}
 
 			"color" -> {
-				println("Enter the name of the transport")
-				val comparing = scan.nextLine()
-				transport.forEach { item ->
-					if ((item as CarBasic).color == comparing) {
+				println("Enter the color of the transport:")
+				val color = scan.nextLine()
+				for (item in transport) {
+					item as CarBasic
+					if (item.color == color) {
 						println(item.getTheInfo())
 						found = true
 					}
@@ -258,7 +257,7 @@ object Shop {
 		}
 
 		if (!found) {
-			println("No info found")
+			println("Items not found!")
 		}
 	}
 }
