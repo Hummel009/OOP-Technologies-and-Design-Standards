@@ -6,7 +6,8 @@ import hummel.special.Listener
 import hummel.special.Transport
 import hummel.special.Visitor
 
-abstract class CarBasic(var price: Int = 0, var color: String = "Color", name: String = "Name") : Component(name), Transport {
+abstract class CarBasic(var price: Int = 0, var color: String = "Color", name: String = "Name") : Component(name),
+	Transport {
 	private val listeners: MutableList<Listener> = mutableListOf()
 	var speed: Int = 0
 		set(value) {

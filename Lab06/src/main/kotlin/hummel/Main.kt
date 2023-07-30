@@ -55,7 +55,7 @@ object LadaPool {
 	}
 
 	private fun createNewCar(): CarLada {
-		return CarLada(6000, "Purple")
+		return CarLada(color = "Purple")
 	}
 }
 
