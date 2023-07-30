@@ -1,6 +1,6 @@
 package hummel.transport
 
-open class CarVolkswagen(private var price: Int = 18000, var color: String = "") : Transport(){
+open class CarVolkswagen(private var price: Int = 18000, var color: String = "") : Transport() {
 	override fun getTheColor(): String {
 		return color
 	}
