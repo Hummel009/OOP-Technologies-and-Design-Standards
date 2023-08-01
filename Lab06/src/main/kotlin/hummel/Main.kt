@@ -94,7 +94,7 @@ object Shop {
 
 	private fun testPatterns() {
 		val carFactory = FunctionalFactory()
-		val vw = carFactory.createCar(15000, "Lime", "CarVolkswagen");
+		val vw = carFactory.createCar(15000, "Lime", "CarVolkswagen")
 		transport.add(vw)
 
 		val car1 = LadaPool.acquire()
