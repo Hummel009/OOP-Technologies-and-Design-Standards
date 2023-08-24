@@ -5,18 +5,19 @@ import hummel.transport.Transport
 import hummel.utils.JsonUtils
 import hummel.utils.StandardUtils
 import hummel.utils.XmlUtils
+import java.nio.charset.StandardCharsets
 import java.util.*
 import javax.xml.bind.annotation.XmlElementWrapper
 import javax.xml.bind.annotation.XmlRootElement
 
 fun main() {
 	Shop.initFunctions()
-	val scan = Scanner(System.`in`)
+	val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
 	var type: String
 
 	loop@ while (true) {
 		println("Select the type of data saving and loading:")
-		type = scan.nextLine()
+		type = scanner.nextLine()
 
 		when (type) {
 			"xml" -> {
@@ -39,7 +40,7 @@ fun main() {
 	loop@ while (true) {
 		println("Enter the command:")
 
-		val command = scan.nextLine()
+		val command = scanner.nextLine()
 		Shop.functions[command]?.invoke()
 		if (command == "exit") {
 			break@loop
@@ -58,6 +59,8 @@ fun main() {
 			}
 		}
 	}
+
+	scanner.close()
 }
 
 @XmlRootElement
@@ -95,41 +98,43 @@ object Shop {
 			println("$i. ${arr[i].getTheInfo()}")
 		}
 		println("Enter the number of the transport to edit:")
-		val scan = Scanner(System.`in`)
-		val index = scan.nextLine().toInt()
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		val index = scanner.nextLine().toInt()
 		try {
 			val item = arr[index]
 			println("Enter the new price:")
-			val price = scan.nextLine().toInt()
+			val price = scanner.nextLine().toInt()
 			println("Enter the new color:")
-			val color = scan.nextLine()
+			val color = scanner.nextLine()
 			item.price = price
 			item.color = color
 			if (item is Improvable) {
 				println("Enter the new improvement:")
-				val improvement = scan.nextLine()
+				val improvement = scanner.nextLine()
 				item.setImprovement(improvement)
 			}
 		} catch (e: Exception) {
 			println("Wrong index!")
 		}
+
+		scanner.close()
 	}
 
 	private fun addTransport() {
 		println("Enter the class name of the transport:")
-		val scan = Scanner(System.`in`)
-		val className = scan.nextLine()
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		val className = scanner.nextLine()
 
 		try {
 			val clazz = Class.forName("hummel.transport.$className")
 			println("Enter the price of the transport:")
-			val price = scan.nextLine().toInt()
+			val price = scanner.nextLine().toInt()
 			println("Enter the color of the transport:")
-			val color = scan.nextLine()
+			val color = scanner.nextLine()
 			val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 			if (item is Improvable) {
 				println("Enter the improvement of the transport:")
-				val improvement = scan.nextLine()
+				val improvement = scanner.nextLine()
 				item.setImprovement(improvement)
 			}
 
@@ -137,17 +142,19 @@ object Shop {
 		} catch (e: Exception) {
 			println("Class not found!")
 		}
+
+		scanner.close()
 	}
 
 	private fun searchForTransport() {
 		println("Enter the type of the search (name, price, color):")
-		val scan = Scanner(System.`in`)
-		val type = scan.nextLine()
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		val type = scanner.nextLine()
 		var found = false
 		when (type) {
 			"name" -> {
 				println("Enter the name of the transport:")
-				val name = scan.nextLine()
+				val name = scanner.nextLine()
 				for (item in transport) {
 					if (item.name == name) {
 						println(item.getTheInfo())
@@ -158,7 +165,7 @@ object Shop {
 
 			"price" -> {
 				println("Enter the price of the transport:")
-				val price = scan.nextLine().toInt()
+				val price = scanner.nextLine().toInt()
 				for (item in transport) {
 					if (item.price == price) {
 						println(item.getTheInfo())
@@ -169,7 +176,7 @@ object Shop {
 
 			"color" -> {
 				println("Enter the color of the transport:")
-				val color = scan.nextLine()
+				val color = scanner.nextLine()
 				for (item in transport) {
 					if (item.color == color) {
 						println(item.getTheInfo())
@@ -178,6 +185,8 @@ object Shop {
 				}
 			}
 		}
+
+		scanner.close()
 
 		if (!found) {
 			println("Items not found!")

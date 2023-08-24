@@ -7,13 +7,9 @@ class CarLada(private var color: String) : CarTransport("Lada") {
 		this.price = i
 	}
 
-	override fun getThePrice(): Int {
-		return price
-	}
+	override fun getThePrice(): Int = price
 
-	override fun getTheColor(): String {
-		return color
-	}
+	override fun getTheColor(): String = color
 
 	override fun getTheInfo(): String {
 		return getTheName() + " (" + getTheColor() + "): " + getThePrice() + "$"

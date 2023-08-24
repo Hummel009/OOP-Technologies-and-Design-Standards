@@ -3,27 +3,19 @@ package hummel.special
 import hummel.transport.*
 
 class ComponentEngine(name: String) : Component(name) {
-	override fun display() {
-		println("Engine: $name")
-	}
+	override fun display(): Unit = println("Engine: $name")
 }
 
 class ComponentTransmission(name: String) : Component(name) {
-	override fun display() {
-		println("Transmission: $name")
-	}
+	override fun display(): Unit = println("Transmission: $name")
 }
 
 class ComponentSuspension(name: String) : Component(name) {
-	override fun display() {
-		println("Suspension: $name")
-	}
+	override fun display(): Unit = println("Suspension: $name")
 }
 
 class EngineGas : Engine {
-	override fun getNewDesc(): String {
-		return "Gas"
-	}
+	override fun getNewDesc(): String = "Gas"
 }
 
 class FunctionalFactory : Factory {
@@ -39,11 +31,7 @@ class FunctionalFactory : Factory {
 
 
 class FunctionalVisitor : Visitor {
-	override fun visit(sedan: CarLada) {
-		println(sedan.getTheInfo() + " It's a great car for fixing.")
-	}
+	override fun visit(sedan: CarLada): Unit = println(sedan.getTheInfo() + " Car for fixing.")
 
-	override fun visit(suv: CarVolkswagen) {
-		println(suv.getTheInfo() + " It's a great car for adventures.")
-	}
+	override fun visit(suv: CarVolkswagen): Unit = println(suv.getTheInfo() + " Car for adventures.")
 }

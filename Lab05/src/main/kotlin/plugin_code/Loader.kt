@@ -1,6 +1,7 @@
 package plugin_code
 
 import hummel.Shop
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 class Loader {
@@ -11,15 +12,17 @@ class Loader {
 
 	private fun decode() {
 		println("Enter the key:")
-		val scan = Scanner(System.`in`)
-		val key = scan.nextLine().filter { it in "01" }
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		val key = scanner.nextLine().filter { it in "01" }
+
+		scanner.close()
 
 		if (key.length == 34) {
 			val encoder = Encoder()
 			encoder.encode(intArrayOf(34, 15, 14, 1), key, "memory/transports.json", "memory/transports.json")
 			encoder.encode(intArrayOf(34, 15, 14, 1), key, "memory/transports.xml", "memory/transports.xml")
 		} else {
-			println("Wrong key. It should contain 0 and 1 only")
+			println("Wrong key. It should contain 0 and 1 only.")
 		}
 	}
 

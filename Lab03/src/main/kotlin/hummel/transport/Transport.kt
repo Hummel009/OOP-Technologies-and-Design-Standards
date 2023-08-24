@@ -17,7 +17,5 @@ import javax.xml.bind.annotation.XmlSeeAlso
 open class Transport(var price: Int = 0, var color: String = "Color", var name: String = "Name") : Serializable {
 	private val serialVersionUID = 1L
 
-	open fun getTheInfo(): String {
-		return "$name ($color): $price$"
-	}
+	open fun getTheInfo(): String = "$name ($color): $price$"
 }

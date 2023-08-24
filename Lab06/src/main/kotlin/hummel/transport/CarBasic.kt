@@ -1,10 +1,6 @@
 package hummel.transport
 
-import hummel.special.Component
-import hummel.special.Engine
-import hummel.special.Listener
-import hummel.special.Transport
-import hummel.special.Visitor
+import hummel.special.*
 
 abstract class CarBasic(var price: Int = 0, var color: String = "Color", name: String = "Name") : Component(name),
 	Transport {
@@ -25,37 +21,23 @@ abstract class CarBasic(var price: Int = 0, var color: String = "Color", name: S
 		}
 	}
 
-	override fun getTheInfo(): String {
-		return "$name ($color): $price$"
-	}
+	override fun getTheInfo(): String = "$name ($color): $price$"
 
-	override fun toString(): String {
-		return "Car $id"
-	}
+	override fun toString(): String = "Car $id"
 
-	fun add(component: Component) {
-		components.add(component)
-	}
+	fun add(component: Component): Boolean = components.add(component)
 
-	fun remove(component: Component) {
-		components.remove(component)
-	}
+	fun remove(component: Component): Boolean = components.remove(component)
 
-	fun addSpeedChangeListener(listener: Listener) {
-		listeners.add(listener)
-	}
+	fun addSpeedChangeListener(listener: Listener): Boolean = listeners.add(listener)
 
-	fun removeSpeedChangeListener(listener: Listener) {
-		listeners.remove(listener)
-	}
+	fun removeSpeedChangeListener(listener: Listener): Boolean = listeners.remove(listener)
 
 	fun setEngine(engine: Engine) {
 		this.engine = engine
 	}
 
-	fun getEngine(): String {
-		return engine?.getNewDesc() ?: "Benz"
-	}
+	fun getEngine(): String = engine?.getNewDesc() ?: "Benz"
 
 	private fun notifySpeedChangeListeners() {
 		for (listener in listeners) {

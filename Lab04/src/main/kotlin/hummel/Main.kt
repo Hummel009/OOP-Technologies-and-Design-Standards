@@ -6,15 +6,16 @@ import hummel.utils.JsonUtils
 import hummel.utils.StandardUtils
 import java.io.File
 import java.net.URLClassLoader
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 fun main() {
-	val scan = Scanner(System.`in`)
+	val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
 	Shop.reloadFunctions()
 
 	loop@ while (true) {
 		println("Enter the command:")
-		val command = scan.nextLine()
+		val command = scanner.nextLine()
 
 		Shop.functions[command]?.invoke()
 
@@ -22,6 +23,8 @@ fun main() {
 			break@loop
 		}
 	}
+
+	scanner.close()
 }
 
 object Shop {
@@ -58,8 +61,9 @@ object Shop {
 
 	private fun loadPlugin() {
 		println("Enter the name of the plugin (example: plugin.jar):")
-		val scan = Scanner(System.`in`)
-		plugin = scan.nextLine()
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		plugin = scanner.nextLine()
+		scanner.close()
 		reloadFunctions()
 	}
 
@@ -81,56 +85,59 @@ object Shop {
 			println("$i. ${arr[i].getTheInfo()}")
 		}
 		println("Enter the number of the transport to edit:")
-		val scan = Scanner(System.`in`)
-		val index = scan.nextLine().toInt()
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		val index = scanner.nextLine().toInt()
 		try {
 			val item = arr[index]
 			println("Enter the new price:")
-			val price = scan.nextLine().toInt()
+			val price = scanner.nextLine().toInt()
 			println("Enter the new color:")
-			val color = scan.nextLine()
+			val color = scanner.nextLine()
 			item.price = price
 			item.color = color
 			if (item is Improvable) {
 				println("Enter the new improvement:")
-				val improvement = scan.nextLine()
+				val improvement = scanner.nextLine()
 				item.setImprovement(improvement)
 			}
 		} catch (e: Exception) {
 			println("Wrong index!")
 		}
+		scanner.close()
 	}
 
 	private fun addTransport() {
 		println("Enter the class name of the transport:")
-		val scan = Scanner(System.`in`)
-		val className = scan.nextLine()
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		val className = scanner.nextLine()
 		val clazz = StandardUtils.accessClass("hummel.transport.$className", "plugin.$className")
 
 		if (clazz != null) {
 			println("Enter the price of the transport:")
-			val price = scan.nextLine().toInt()
+			val price = scanner.nextLine().toInt()
 			println("Enter the color of the transport:")
-			val color = scan.nextLine()
+			val color = scanner.nextLine()
 			val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 			if (item is Improvable) {
 				println("Enter the improvement of the transport:")
-				val improvement = scan.nextLine()
+				val improvement = scanner.nextLine()
 				item.setImprovement(improvement)
 			}
 			transport.add(item)
 		}
+
+		scanner.close()
 	}
 
 	private fun searchForTransport() {
 		println("Enter the type of the search (name, price, color):")
-		val scan = Scanner(System.`in`)
-		val type = scan.nextLine()
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		val type = scanner.nextLine()
 		var found = false
 		when (type) {
 			"name" -> {
 				println("Enter the name of the transport:")
-				val name = scan.nextLine()
+				val name = scanner.nextLine()
 				for (item in transport) {
 					if (item.name == name) {
 						println(item.getTheInfo())
@@ -141,7 +148,7 @@ object Shop {
 
 			"price" -> {
 				println("Enter the price of the transport:")
-				val price = scan.nextLine().toInt()
+				val price = scanner.nextLine().toInt()
 				for (item in transport) {
 					if (item.price == price) {
 						println(item.getTheInfo())
@@ -152,7 +159,7 @@ object Shop {
 
 			"color" -> {
 				println("Enter the color of the transport:")
-				val color = scan.nextLine()
+				val color = scanner.nextLine()
 				for (item in transport) {
 					if (item.color == color) {
 						println(item.getTheInfo())
@@ -161,6 +168,8 @@ object Shop {
 				}
 			}
 		}
+
+		scanner.close()
 
 		if (!found) {
 			println("Items not found!")

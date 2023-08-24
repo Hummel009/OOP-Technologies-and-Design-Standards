@@ -1,15 +1,3 @@
 package hummel.transport
 
-open class BicycleStels(private var price: Int = 300, var color: String = "") : Transport() {
-	override fun getTheColor(): String {
-		return color
-	}
-
-	override fun getThePrice(): Int {
-		return price
-	}
-
-	override fun getTheName(): String {
-		return "Stels"
-	}
-}
+open class BicycleStels(price: Int = 300, color: String = "") : Transport(price, color, "Stels")

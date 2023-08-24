@@ -1,23 +1,26 @@
 package hummel
 
-import hummel.transport.*
+import hummel.transport.Transport
 import hummel.util.StandardUtils
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 fun main() {
 	Shop.initFunctions()
-	val scan = Scanner(System.`in`)
+	val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
 
 	loop@ while (true) {
 		println("Enter the command:")
 
-		val command = scan.nextLine()
+		val command = scanner.nextLine()
 		Shop.functions[command]?.invoke()
 
 		if (command == "exit") {
 			break@loop
 		}
 	}
+
+	scanner.close()
 }
 
 object Shop {
@@ -46,13 +49,13 @@ object Shop {
 
 	private fun searchForTransport() {
 		println("Enter the type of the search (name, price, color):")
-		val scan = Scanner(System.`in`)
-		val type = scan.nextLine()
+		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		val type = scanner.nextLine()
 		var found = false
 		when (type) {
 			"name" -> {
 				println("Enter the name of the transport:")
-				val name = scan.nextLine()
+				val name = scanner.nextLine()
 				for (item in transport) {
 					if (item.getTheName() == name) {
 						println(item.getTheInfo())
@@ -63,7 +66,7 @@ object Shop {
 
 			"price" -> {
 				println("Enter the price of the transport:")
-				val price = scan.nextLine().toInt()
+				val price = scanner.nextLine().toInt()
 				for (item in transport) {
 					if (item.getThePrice() == price) {
 						println(item.getTheInfo())
@@ -74,7 +77,7 @@ object Shop {
 
 			"color" -> {
 				println("Enter the color of the transport:")
-				val color = scan.nextLine()
+				val color = scanner.nextLine()
 				for (item in transport) {
 					if (item.getTheColor() == color) {
 						println(item.getTheInfo())
@@ -83,6 +86,8 @@ object Shop {
 				}
 			}
 		}
+
+		scanner.close()
 
 		if (!found) {
 			println("Items not found!")
