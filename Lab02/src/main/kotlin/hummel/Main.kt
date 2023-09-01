@@ -5,21 +5,20 @@ import hummel.util.StandardUtils
 import java.nio.charset.StandardCharsets
 import java.util.*
 
+val scanner: Scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+
 fun main() {
-	Shop.initFunctions()
-	val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
-
+	Shop.init()
 	loop@ while (true) {
-		println("Enter the command:")
-
+		print("Enter the command: ")
 		val command = scanner.nextLine()
-		Shop.functions[command]?.invoke()
+
+		Shop.functions[command]?.invoke() ?: println("Unknown command!")
 
 		if (command == "exit") {
 			break@loop
 		}
 	}
-
 	scanner.close()
 }
 
@@ -27,7 +26,7 @@ object Shop {
 	private val transport: MutableList<Transport> = ArrayList()
 	val functions: MutableMap<String, () -> Unit> = HashMap()
 
-	fun initFunctions() {
+	fun init() {
 		functions["commands"] = this::showAllCommands
 		functions["show"] = this::showAllTransport
 		functions["search"] = this::searchForTransport
@@ -49,35 +48,28 @@ object Shop {
 	}
 
 	private fun addTransport() {
-		println("Enter the class name of the transport:")
-		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		print("Enter the class name of the transport: ")
 		val className = scanner.nextLine()
-
 		try {
 			val clazz = Class.forName("hummel.transport.$className")
-			println("Enter the price of the transport:")
-			val price = scanner.nextLine().toInt()
-			println("Enter the color of the transport:")
+			print("Enter the price of the transport: ")
+			val price = scanner.nextIntSafe()
+			print("Enter the color of the transport: ")
 			val color = scanner.nextLine()
-
 			val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
-
 			transport.add(item)
 		} catch (e: Exception) {
 			println("Class not found!")
 		}
-
-		scanner.close()
 	}
 
 	private fun searchForTransport() {
-		println("Enter the type of the search (name, price, color):")
-		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		print("Enter the type of the search (name, price, color): ")
 		val type = scanner.nextLine()
 		var found = false
 		when (type) {
 			"name" -> {
-				println("Enter the name of the transport:")
+				print("Enter the name of the transport: ")
 				val name = scanner.nextLine()
 				for (item in transport) {
 					if (item.name == name) {
@@ -88,8 +80,8 @@ object Shop {
 			}
 
 			"price" -> {
-				println("Enter the price of the transport:")
-				val price = scanner.nextLine().toInt()
+				print("Enter the price of the transport: ")
+				val price = scanner.nextIntSafe()
 				for (item in transport) {
 					if (item.price == price) {
 						println(item.getTheInfo())
@@ -99,7 +91,7 @@ object Shop {
 			}
 
 			"color" -> {
-				println("Enter the color of the transport:")
+				print("Enter the color of the transport: ")
 				val color = scanner.nextLine()
 				for (item in transport) {
 					if (item.color == color) {
@@ -110,10 +102,19 @@ object Shop {
 			}
 		}
 
-		scanner.close()
-
 		if (!found) {
 			println("Items not found!")
 		}
+	}
+}
+
+fun Scanner.nextIntSafe(): Int {
+	return try {
+		val str = nextLine()
+		val num = str.toInt()
+		num
+	} catch (e: Exception) {
+		print("Error! Enter the correct value: ")
+		nextIntSafe()
 	}
 }

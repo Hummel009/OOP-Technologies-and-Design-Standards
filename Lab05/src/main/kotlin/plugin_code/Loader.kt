@@ -1,7 +1,7 @@
 package plugin_code
 
 import hummel.Shop
-import java.nio.charset.StandardCharsets
+import hummel.scanner
 import java.util.*
 
 class Loader {
@@ -11,11 +11,8 @@ class Loader {
 	}
 
 	private fun decode() {
-		println("Enter the key:")
-		val scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
+		print("Enter the key: ")
 		val key = scanner.nextLine().filter { it in "01" }
-
-		scanner.close()
 
 		if (key.length == 34) {
 			val encoder = Encoder()
