@@ -39,11 +39,11 @@ fun main() {
 		print("Enter the command: ")
 		val command = scanner.nextLine()
 
-		Shop.functions[command]?.invoke() ?: println("Unknown command!")
-
 		if (command == "exit") {
 			break@loop
 		}
+
+		Shop.functions[command]?.invoke() ?: println("Unknown command!")
 
 		when (type) {
 			"xml" -> XmlUtils.serialize()
