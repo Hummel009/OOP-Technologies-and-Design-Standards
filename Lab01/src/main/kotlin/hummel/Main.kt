@@ -2,16 +2,12 @@ package hummel
 
 import hummel.transport.Transport
 import hummel.util.StandardUtils
-import java.nio.charset.StandardCharsets
-import java.util.*
-
-val scanner: Scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
 
 fun main() {
 	Shop.init()
 	loop@ while (true) {
 		print("Enter the command: ")
-		val command = scanner.nextLine()
+		val command = readln()
 
 		if (command == "exit") {
 			break@loop
@@ -19,7 +15,6 @@ fun main() {
 
 		Shop.functions[command]?.invoke() ?: println("Unknown command!")
 	}
-	scanner.close()
 }
 
 object Shop {
@@ -48,12 +43,12 @@ object Shop {
 
 	private fun searchForTransport() {
 		print("Enter the type of the search (name, price, color): ")
-		val type = scanner.nextLine()
+		val type = readln()
 		var found = false
 		when (type) {
 			"name" -> {
 				print("Enter the name of the transport: ")
-				val name = scanner.nextLine()
+				val name = readln()
 				for (item in transport) {
 					if (item.getTheName() == name) {
 						println(item.getTheInfo())
@@ -64,7 +59,7 @@ object Shop {
 
 			"price" -> {
 				print("Enter the price of the transport: ")
-				val price = scanner.nextIntSafe()
+				val price = readIntSafe()
 				for (item in transport) {
 					if (item.getThePrice() == price) {
 						println(item.getTheInfo())
@@ -75,7 +70,7 @@ object Shop {
 
 			"color" -> {
 				print("Enter the color of the transport: ")
-				val color = scanner.nextLine()
+				val color = readln()
 				for (item in transport) {
 					if (item.getTheColor() == color) {
 						println(item.getTheInfo())
@@ -91,13 +86,11 @@ object Shop {
 	}
 }
 
-fun Scanner.nextIntSafe(): Int {
+fun readIntSafe(): Int {
 	return try {
-		val str = nextLine()
-		val num = str.toInt()
-		num
+		readln().toInt()
 	} catch (e: Exception) {
 		print("Error! Enter the correct value: ")
-		nextIntSafe()
+		readIntSafe()
 	}
 }

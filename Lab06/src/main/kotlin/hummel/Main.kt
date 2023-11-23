@@ -8,16 +8,12 @@ import hummel.utils.JsonUtils
 import hummel.utils.StandardUtils
 import java.io.File
 import java.net.URLClassLoader
-import java.nio.charset.StandardCharsets
-import java.util.*
-
-val scanner: Scanner = Scanner(System.`in`, StandardCharsets.UTF_8.name())
 
 fun main() {
 	Shop.init()
 	loop@ while (true) {
 		print("Enter the command: ")
-		val command = scanner.nextLine()
+		val command = readln()
 
 		if (command == "exit") {
 			break@loop
@@ -25,7 +21,6 @@ fun main() {
 
 		Shop.functions[command]?.invoke() ?: println("Unknown command!")
 	}
-	scanner.close()
 }
 
 object LadaPool {
@@ -86,7 +81,7 @@ object Shop {
 				val classLoader = URLClassLoader(arrayOf(pluginFile.toURI().toURL()))
 				val clazz = classLoader.loadClass("plugin.Loader")
 				val loadMethod = clazz.getDeclaredMethod("load")
-				val loaderInstance = clazz.newInstance()
+				val loaderInstance = clazz.getConstructor().newInstance()
 				loadMethod.invoke(loaderInstance)
 			} catch (e: Exception) {
 				println("This plugin don't exist or has no new functions. That's ok, if plugin contains only objects.")
@@ -148,7 +143,7 @@ object Shop {
 
 	private fun loadPlugin() {
 		print("Enter the name of the plugin: ")
-		plugin = scanner.nextLine()
+		plugin = readln()
 
 		init()
 	}
@@ -173,19 +168,19 @@ object Shop {
 			println("$i. ${arr[i].getTheInfo()}")
 		}
 		print("Enter the number of the transport to edit: ")
-		val index = scanner.nextIntSafe()
+		val index = readIntSafe()
 		try {
 			val item = arr[index]
 			print("Enter the new price: ")
-			val price = scanner.nextIntSafe()
+			val price = readIntSafe()
 			print("Enter the new color: ")
-			val color = scanner.nextLine()
+			val color = readln()
 			item as CarBasic
 			item.price = price
 			item.color = color
 			if (item is Improvable) {
 				print("Enter the new improvement: ")
-				val improvement = scanner.nextLine()
+				val improvement = readln()
 				item.setImprovement(improvement)
 			}
 		} catch (e: Exception) {
@@ -195,17 +190,17 @@ object Shop {
 
 	private fun addTransport() {
 		print("Enter the class name of the transport: ")
-		val className = scanner.nextLine()
+		val className = readln()
 		val clazz = StandardUtils.accessClass("hummel.transport.$className", "plugin.$className")
 		if (clazz != null) {
 			print("Enter the price of the transport: ")
-			val price = scanner.nextIntSafe()
+			val price = readIntSafe()
 			print("Enter the color of the transport: ")
-			val color = scanner.nextLine()
+			val color = readln()
 			val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 			if (item is Improvable) {
 				print("Enter the improvement of the transport: ")
-				val improvement = scanner.nextLine()
+				val improvement = readln()
 				item.setImprovement(improvement)
 			}
 			transport.add(item)
@@ -214,12 +209,12 @@ object Shop {
 
 	private fun searchForTransport() {
 		print("Enter the type of the search (name, price, color): ")
-		val type = scanner.nextLine()
+		val type = readln()
 		var found = false
 		when (type) {
 			"name" -> {
 				print("Enter the name of the transport: ")
-				val name = scanner.nextLine()
+				val name = readln()
 				for (item in transport) {
 					item as CarBasic
 					if (item.name == name) {
@@ -231,7 +226,7 @@ object Shop {
 
 			"price" -> {
 				print("Enter the price of the transport: ")
-				val price = scanner.nextIntSafe()
+				val price = readIntSafe()
 				for (item in transport) {
 					item as CarBasic
 					if (item.price == price) {
@@ -243,7 +238,7 @@ object Shop {
 
 			"color" -> {
 				print("Enter the color of the transport: ")
-				val color = scanner.nextLine()
+				val color = readln()
 				for (item in transport) {
 					item as CarBasic
 					if (item.color == color) {
@@ -260,13 +255,11 @@ object Shop {
 	}
 }
 
-fun Scanner.nextIntSafe(): Int {
+fun readIntSafe(): Int {
 	return try {
-		val str = nextLine()
-		val num = str.toInt()
-		num
+		readln().toInt()
 	} catch (e: Exception) {
 		print("Error! Enter the correct value: ")
-		nextIntSafe()
+		readIntSafe()
 	}
 }
