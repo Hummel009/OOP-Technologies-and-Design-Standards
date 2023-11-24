@@ -1,7 +1,6 @@
 package plugin_code
 
 import hummel.Shop
-import hummel.scanner
 import java.util.*
 
 class Loader {
@@ -12,7 +11,7 @@ class Loader {
 
 	private fun decode() {
 		print("Enter the key: ")
-		val key = scanner.nextLine().filter { it in "01" }
+		val key = readln().filter { it in "01" }
 
 		if (key.length == 34) {
 			val encoder = Encoder()
