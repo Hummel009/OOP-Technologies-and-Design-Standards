@@ -24,16 +24,16 @@ fun main() {
 object Shop {
 	val functions: MutableMap<String, () -> Unit> = HashMap()
 	val transport: MutableList<Transport> = ArrayList()
-	var plugin: String = ""
+	var plugin: String? = null
 
 	fun init() {
 		functions.clear()
-		functions["commands"] = this::showAllCommands
-		functions["show"] = this::showAllTransport
-		functions["sell"] = this::addTransport
-		functions["edit"] = this::editTransport
-		functions["search"] = this::searchForTransport
-		functions["plugin"] = this::loadPlugin
+		functions["commands"] = ::showAllCommands
+		functions["show"] = ::showAllTransport
+		functions["sell"] = ::addTransport
+		functions["edit"] = ::editTransport
+		functions["search"] = ::searchForTransport
+		functions["plugin"] = ::loadPlugin
 		functions["clear"] = { transport.clear() }
 		functions["load"] = { transport.addAll(StandardUtils.defaultList) }
 		functions["deserialize"] = { JsonUtils.deserialize() }
@@ -41,9 +41,9 @@ object Shop {
 		functions["convertJsonXml"] = StandardUtils::convertJsonToXml
 		functions["convertXmlJson"] = StandardUtils::convertXmlToJson
 
-		if (plugin != "") {
+		plugin?.let {
 			try {
-				val pluginFile = File(plugin)
+				val pluginFile = File(it)
 				val classLoader = URLClassLoader(arrayOf(pluginFile.toURI().toURL()))
 				val clazz = classLoader.loadClass("plugin.Loader")
 				val loadMethod = clazz.getDeclaredMethod("load")
@@ -58,30 +58,23 @@ object Shop {
 	private fun loadPlugin() {
 		print("Enter the name of the plugin (example: plugin.jar): ")
 		plugin = readln()
-
 		init()
 	}
 
 	private fun showAllCommands() {
-		for (item in functions.keys) {
-			println(item)
-		}
+		functions.keys.forEach { println(it) }
 	}
 
 	private fun showAllTransport() {
-		for (item in transport) {
-			println(item.getTheInfo())
-		}
+		transport.forEach { println(it.getTheInfo()) }
 	}
 
 	private fun editTransport() {
 		val arr = transport.toTypedArray()
-		for (i in arr.indices) {
-			println("$i. ${arr[i].getTheInfo()}")
-		}
+		arr.forEachIndexed { i, item -> println("$i. ${item.getTheInfo()}") }
 		print("Enter the number of the transport to edit: ")
 		val index = readIntSafe()
-		try {
+		if (index in arr.indices) {
 			val item = arr[index]
 			print("Enter the new price: ")
 			val price = readIntSafe()
@@ -94,7 +87,7 @@ object Shop {
 				val improvement = readln()
 				item.setImprovement(improvement)
 			}
-		} catch (e: Exception) {
+		} else {
 			println("Wrong index!")
 		}
 	}
@@ -103,12 +96,12 @@ object Shop {
 		print("Enter the class name of the transport: ")
 		val className = readln()
 		val clazz = StandardUtils.accessClass("hummel.transport.$className", "plugin.$className")
-		if (clazz != null) {
+		clazz?.let {
 			print("Enter the price of the transport: ")
 			val price = readIntSafe()
 			print("Enter the color of the transport: ")
 			val color = readln()
-			val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
+			val item = it.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 			if (item is Improvable) {
 				print("Enter the improvement of the transport: ")
 				val improvement = readln()
@@ -126,33 +119,27 @@ object Shop {
 			"name" -> {
 				print("Enter the name of the transport: ")
 				val name = readln()
-				for (item in transport) {
-					if (item.name == name) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.name == name }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 
 			"price" -> {
 				print("Enter the price of the transport: ")
 				val price = readIntSafe()
-				for (item in transport) {
-					if (item.price == price) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.price == price }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 
 			"color" -> {
 				print("Enter the color of the transport: ")
 				val color = readln()
-				for (item in transport) {
-					if (item.color == color) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.color == color }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 		}

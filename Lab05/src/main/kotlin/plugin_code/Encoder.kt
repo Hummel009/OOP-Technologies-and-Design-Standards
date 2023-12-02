@@ -16,22 +16,28 @@ class Encoder {
 	) {
 		val reg = Register(polynomialPowers, initialKey)
 		val srcBytes = File(pathToSrcFile).readBytes()
+		val resBytes = srcBytes.copyOf()
+
 		val currKey = StringBuilder()
-		for (i in srcBytes.indices) {
-			bufSrcFile.append(Integer.toBinaryString(srcBytes[i].toInt() and 0xFF).format("%8s", "0") + " ")
-			repeat(bites) {
-				currKey.append(reg.generateKeyBit())
+		srcBytes.forEachIndexed { i, byte ->
+			bufSrcFile.append(Integer.toBinaryString(byte.toInt() and 0xFF).format("%8s", "0") + " ")
+
+			repeat(bites) { currKey.append(reg.generateKeyBit()) }
+
+			var keyByte = 0
+
+			currKey.toString().indices.asSequence().map { j ->
+				2.0.pow((bites - 1 - j)).toInt().toByte() * (currKey.toString()[j].digitToInt()).toByte()
+			}.forEach {
+				keyByte = (keyByte + it)
 			}
-			var keyByte = 0.toByte()
-			for (j in currKey.toString().indices) {
-				val bp = (currKey.toString()[j].digitToInt()).toByte() * 2.0.pow((bites - 1 - j)).toInt().toByte()
-				keyByte = (keyByte + bp).toByte()
-			}
+
 			bufGenkey.append(currKey.toString())
-			srcBytes[i] = srcBytes[i] xor keyByte
-			bufResFile.append(Integer.toBinaryString(srcBytes[i].toInt() and 0xFF).format("%8s", "0") + " ")
+			resBytes[i] = byte xor keyByte.toByte()
+			bufResFile.append(Integer.toBinaryString(resBytes[i].toInt() and 0xFF).format("%8s", "0") + " ")
+
 			currKey.clear()
 		}
-		File(pathToResFile).writeBytes(srcBytes)
+		File(pathToResFile).writeBytes(resBytes)
 	}
 }

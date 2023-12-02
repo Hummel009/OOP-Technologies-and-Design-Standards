@@ -20,15 +20,14 @@ class Register(numbers: IntArray, initial: String) {
 	fun generateKeyBit(): Int {
 		val keyBit = bufNow[bufNow.size - 1]
 
-		for (i in powers.indices) {
-			xorCells[i] = bufNow[powers[i] - 1]
-		}
+		powers.forEachIndexed { i, power -> xorCells[i] = bufNow[power - 1] }
 
 		for (i in bufNow.size - 1 downTo 1) {
 			bufNow[i] = bufNow[i - 1]
 		}
 
 		bufNow[0] = xorCells[0]
+
 		for (i in 1 until xorCells.size) {
 			bufNow[0] = bufNow[0] xor xorCells[i]
 		}

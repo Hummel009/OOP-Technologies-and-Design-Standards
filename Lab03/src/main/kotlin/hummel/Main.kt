@@ -57,35 +57,29 @@ object Shop {
 	val functions: MutableMap<String, () -> Unit> = HashMap()
 
 	fun init() {
-		functions["commands"] = this::showAllCommands
-		functions["show"] = this::showAllTransport
-		functions["sell"] = this::addTransport
-		functions["edit"] = this::editTransport
-		functions["search"] = this::searchForTransport
+		functions["commands"] = ::showAllCommands
+		functions["show"] = ::showAllTransport
+		functions["sell"] = ::addTransport
+		functions["edit"] = ::editTransport
+		functions["search"] = ::searchForTransport
 		functions["clear"] = { transport.clear() }
 		functions["load"] = { transport.addAll(StandardUtils.defaultList) }
 	}
 
 	private fun showAllCommands() {
-		for (item in functions.keys) {
-			println(item)
-		}
+		functions.keys.forEach { println(it) }
 	}
 
 	private fun showAllTransport() {
-		for (item in transport) {
-			println(item.getTheInfo())
-		}
+		transport.forEach { println(it.getTheInfo()) }
 	}
 
 	private fun editTransport() {
 		val arr = transport.toTypedArray()
-		for (i in arr.indices) {
-			println("$i. ${arr[i].getTheInfo()}")
-		}
+		arr.forEachIndexed { i, item -> println("$i. ${item.getTheInfo()}") }
 		print("Enter the number of the transport to edit: ")
 		val index = readIntSafe()
-		try {
+		if (index in arr.indices) {
 			val item = arr[index]
 			print("Enter the new price: ")
 			val price = readIntSafe()
@@ -98,7 +92,7 @@ object Shop {
 				val improvement = readln()
 				item.setImprovement(improvement)
 			}
-		} catch (e: Exception) {
+		} else {
 			println("Wrong index!")
 		}
 	}
@@ -132,33 +126,27 @@ object Shop {
 			"name" -> {
 				print("Enter the name of the transport: ")
 				val name = readln()
-				for (item in transport) {
-					if (item.name == name) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.name == name }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 
 			"price" -> {
 				print("Enter the price of the transport: ")
 				val price = readIntSafe()
-				for (item in transport) {
-					if (item.price == price) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.price == price }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 
 			"color" -> {
 				print("Enter the color of the transport: ")
 				val color = readln()
-				for (item in transport) {
-					if (item.color == color) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.color == color }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 		}

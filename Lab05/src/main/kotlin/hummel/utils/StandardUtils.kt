@@ -90,6 +90,7 @@ object StandardUtils {
 		File("memory/transports.json").writeText(gson.toJson(jsonArray))
 	}
 
+	@Suppress("LoopToCallChain")
 	private fun parseList(node: Node): List<Any> {
 		val list = mutableListOf<Any>()
 

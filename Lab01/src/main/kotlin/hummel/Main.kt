@@ -22,23 +22,19 @@ object Shop {
 	val functions: MutableMap<String, () -> Unit> = HashMap()
 
 	fun init() {
-		functions["commands"] = this::showAllCommands
-		functions["show"] = this::showAllTransport
-		functions["search"] = this::searchForTransport
+		functions["commands"] = ::showAllCommands
+		functions["show"] = ::showAllTransport
+		functions["search"] = ::searchForTransport
 		functions["clear"] = { transport.clear() }
 		functions["load"] = { transport.addAll(StandardUtils.defaultList) }
 	}
 
 	private fun showAllCommands() {
-		for (item in functions.keys) {
-			println(item)
-		}
+		functions.keys.forEach { println(it) }
 	}
 
 	private fun showAllTransport() {
-		for (item in transport) {
-			println(item.getTheInfo())
-		}
+		transport.forEach { println(it.getTheInfo()) }
 	}
 
 	private fun searchForTransport() {
@@ -49,33 +45,27 @@ object Shop {
 			"name" -> {
 				print("Enter the name of the transport: ")
 				val name = readln()
-				for (item in transport) {
-					if (item.getTheName() == name) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.getTheName() == name }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 
 			"price" -> {
 				print("Enter the price of the transport: ")
 				val price = readIntSafe()
-				for (item in transport) {
-					if (item.getThePrice() == price) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.getThePrice() == price }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 
 			"color" -> {
 				print("Enter the color of the transport: ")
 				val color = readln()
-				for (item in transport) {
-					if (item.getTheColor() == color) {
-						println(item.getTheInfo())
-						found = true
-					}
+				transport.asSequence().filter { it.getTheColor() == color }.forEach {
+					println(it.getTheInfo())
+					found = true
 				}
 			}
 		}
