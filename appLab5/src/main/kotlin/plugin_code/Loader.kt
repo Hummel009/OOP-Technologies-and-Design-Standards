@@ -3,10 +3,11 @@ package plugin_code
 import hummel.Shop
 import java.util.*
 
+@Suppress("unused")
 class Loader {
 	fun load() {
-		Shop.functions["encode"] = this::encode
-		Shop.functions["decode"] = this::decode
+		Shop.functions["encode"] = ::encode
+		Shop.functions["decode"] = ::decode
 	}
 
 	private fun decode() {
