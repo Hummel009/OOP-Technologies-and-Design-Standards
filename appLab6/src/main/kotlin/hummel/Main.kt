@@ -116,11 +116,7 @@ object Shop {
 		car6.accept(visitor)
 		car7.accept(visitor)
 
-		val listener = object : Listener {
-			override fun onSpeedChange(car: CarBasic, newSpeed: Int) {
-				println("${car.name} is now driving at $newSpeed km/h.")
-			}
-		}
+		val listener = Listener { car, newSpeed -> println("${car.name} is now driving at $newSpeed km/h.") }
 
 		car5.addSpeedChangeListener(listener)
 		car6.addSpeedChangeListener(listener)
