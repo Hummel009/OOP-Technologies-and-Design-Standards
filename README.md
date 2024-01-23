@@ -1,3 +1,14 @@
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=code_smells)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=security_rating)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=bugs)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=vulnerabilities)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=alert_status)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=sqale_index)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Hummel009_OOP-Technologies-and-Design-Standards&metric=ncloc)](https://sonarcloud.io/summary/overall?id=Hummel009_OOP-Technologies-and-Design-Standards)
+
 Мои лабораторные работы для BSUIR/БГУИР (белорусский государственный университет информатики и радиоэлектроники).
 
 Предмет - OOTPiSP/ООТПиСП (объектно-ориентированные технологии программирования и стандарты проектирования).
