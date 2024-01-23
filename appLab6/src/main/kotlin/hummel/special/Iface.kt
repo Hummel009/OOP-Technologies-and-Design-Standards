@@ -4,25 +4,25 @@ import hummel.transport.CarBasic
 import hummel.transport.CarLada
 import hummel.transport.CarVolkswagen
 
-interface Factory {
+fun interface Factory {
 	fun createCar(price: Int, color: String, name: String): CarBasic
 }
 
-interface Engine {
+fun interface Engine {
 	fun getNewDesc(): String
+}
+
+fun interface Listener {
+	fun onSpeedChange(car: CarBasic, newSpeed: Int)
+}
+
+fun interface Transport {
+	fun getTheInfo(): String
 }
 
 interface Improvable {
 	fun getImprovement(): String
 	fun setImprovement(improvement: String): Improvable
-}
-
-interface Listener {
-	fun onSpeedChange(car: CarBasic, newSpeed: Int)
-}
-
-interface Transport {
-	fun getTheInfo(): String
 }
 
 interface Visitor {

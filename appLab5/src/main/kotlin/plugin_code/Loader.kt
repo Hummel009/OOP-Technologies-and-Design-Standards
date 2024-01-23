@@ -1,7 +1,10 @@
 package plugin_code
 
 import hummel.Shop
-import java.util.*
+import java.security.SecureRandom
+
+private const val MEMORY_TRANSPORTS_JSON = "memory/transports.json"
+private const val MEMORY_TRANSPORTS_XML = "memory/transports.xml"
 
 @Suppress("unused")
 class Loader {
@@ -16,8 +19,8 @@ class Loader {
 
 		if (key.length == 34) {
 			val encoder = Encoder()
-			encoder.encode(intArrayOf(34, 15, 14, 1), key, "memory/transports.json", "memory/transports.json")
-			encoder.encode(intArrayOf(34, 15, 14, 1), key, "memory/transports.xml", "memory/transports.xml")
+			encoder.encode(intArrayOf(34, 15, 14, 1), key, MEMORY_TRANSPORTS_JSON, MEMORY_TRANSPORTS_JSON)
+			encoder.encode(intArrayOf(34, 15, 14, 1), key, MEMORY_TRANSPORTS_XML, MEMORY_TRANSPORTS_XML)
 		} else {
 			println("Wrong key. It should contain 0 and 1 only.")
 		}
@@ -26,7 +29,7 @@ class Loader {
 	private fun encode() {
 		val length = 34
 		val charset = "01"
-		val random = Random()
+		val random = SecureRandom()
 
 		val sb = StringBuilder()
 		for (i in 0 until length) {
@@ -39,7 +42,7 @@ class Loader {
 		println("Random key: $key")
 
 		val encoder = Encoder()
-		encoder.encode(intArrayOf(34, 15, 14, 1), key, "memory/transports.json", "memory/transports.json")
-		encoder.encode(intArrayOf(34, 15, 14, 1), key, "memory/transports.xml", "memory/transports.xml")
+		encoder.encode(intArrayOf(34, 15, 14, 1), key, MEMORY_TRANSPORTS_JSON, MEMORY_TRANSPORTS_JSON)
+		encoder.encode(intArrayOf(34, 15, 14, 1), key, MEMORY_TRANSPORTS_XML, MEMORY_TRANSPORTS_XML)
 	}
 }
