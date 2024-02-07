@@ -179,7 +179,7 @@ object Shop {
 	private fun addTransport() {
 		print("Enter the class name of the transport: ")
 		val className = readln()
-		val clazz = StandardUtils.accessClass("hummel.transport.$className", "plugin.$className")
+		val clazz = StandardUtils.accessClass("com.github.hummel.ooptds.lab6.transport.$className", "plugin.$className")
 		clazz?.let {
 			print("Enter the price of the transport: ")
 			val price = readIntSafe()

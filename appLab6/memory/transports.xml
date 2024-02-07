@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <root>
-<object>
-<price>200.0</price>
-<color>Red</color>
-<className>hummel.transport.BicycleAist</className>
-</object>
-<object>
-<price>300.0</price>
-<color>Red</color>
-<className>hummel.transport.BicycleStels</className>
-</object>
-<object>
-<price>18000.0</price>
-<color>Red</color>
-<className>hummel.transport.CarVolkswagen</className>
-</object>
-<object>
-<price>6000.0</price>
-<color>Red</color>
-<className>hummel.transport.CarLada</className>
-</object>
-<object>
-<price>250.0</price>
-<color>Green</color>
-<className>hummel.transport.BicycleAist</className>
-</object>
-<object>
-<price>350.0</price>
-<color>Green</color>
-<className>hummel.transport.BicycleStels</className>
-</object>
-<object>
-<price>18500.0</price>
-<color>Green</color>
-<className>hummel.transport.CarVolkswagen</className>
-</object>
-<object>
-<price>6500.0</price>
-<color>Green</color>
-<className>hummel.transport.CarLada</className>
-</object>
-<object>
-<price>150.0</price>
-<color>Blue</color>
-<className>hummel.transport.BicycleAist</className>
-</object>
-<object>
-<price>250.0</price>
-<color>Blue</color>
-<className>hummel.transport.BicycleStels</className>
-</object>
-<object>
-<price>17500.0</price>
-<color>Blue</color>
-<className>hummel.transport.CarVolkswagen</className>
-</object>
-<object>
-<price>5500.0</price>
-<color>Blue</color>
-<className>hummel.transport.CarLada</className>
-</object>
-<object>
-<price>19000.0</price>
-<color>Grey</color>
-<className>hummel.transport.CarVolkswagenImproved</className>
-<improvement>Chromed Sportline</improvement>
-</object>
-<object>
-<price>7000.0</price>
-<color>Violet</color>
-<className>hummel.transport.CarLadaImproved</className>
-<improvement>Sedan Baklazhan</improvement>
-</object>
+	<object>
+		<price>200.0</price>
+		<color>Red</color>
+		<className>hummel.transport.BicycleAist</className>
+	</object>
+	<object>
+		<price>300.0</price>
+		<color>Red</color>
+		<className>hummel.transport.BicycleStels</className>
+	</object>
+	<object>
+		<price>18000.0</price>
+		<color>Red</color>
+		<className>hummel.transport.CarVolkswagen</className>
+	</object>
+	<object>
+		<price>6000.0</price>
+		<color>Red</color>
+		<className>hummel.transport.CarLada</className>
+	</object>
+	<object>
+		<price>250.0</price>
+		<color>Green</color>
+		<className>hummel.transport.BicycleAist</className>
+	</object>
+	<object>
+		<price>350.0</price>
+		<color>Green</color>
+		<className>hummel.transport.BicycleStels</className>
+	</object>
+	<object>
+		<price>18500.0</price>
+		<color>Green</color>
+		<className>hummel.transport.CarVolkswagen</className>
+	</object>
+	<object>
+		<price>6500.0</price>
+		<color>Green</color>
+		<className>hummel.transport.CarLada</className>
+	</object>
+	<object>
+		<price>150.0</price>
+		<color>Blue</color>
+		<className>hummel.transport.BicycleAist</className>
+	</object>
+	<object>
+		<price>250.0</price>
+		<color>Blue</color>
+		<className>hummel.transport.BicycleStels</className>
+	</object>
+	<object>
+		<price>17500.0</price>
+		<color>Blue</color>
+		<className>hummel.transport.CarVolkswagen</className>
+	</object>
+	<object>
+		<price>5500.0</price>
+		<color>Blue</color>
+		<className>hummel.transport.CarLada</className>
+	</object>
+	<object>
+		<price>19000.0</price>
+		<color>Grey</color>
+		<className>hummel.transport.CarVolkswagenImproved</className>
+		<improvement>Chromed Sportline</improvement>
+	</object>
+	<object>
+		<price>7000.0</price>
+		<color>Violet</color>
+		<className>hummel.transport.CarLadaImproved</className>
+		<improvement>Sedan Baklazhan</improvement>
+	</object>
 </root>

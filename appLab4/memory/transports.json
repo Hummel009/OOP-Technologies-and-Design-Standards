@@ -1,79 +1,79 @@
 [
-  {
-    "price": 200,
-    "color": "Red",
-    "className": "hummel.transport.BicycleAist"
-  },
-  {
-    "price": 300,
-    "color": "Red",
-    "className": "hummel.transport.BicycleStels"
-  },
-  {
-    "price": 18000,
-    "color": "Red",
-    "className": "hummel.transport.CarVolkswagen"
-  },
-  {
-    "price": 6000,
-    "color": "Red",
-    "className": "hummel.transport.CarLada"
-  },
-  {
-    "price": 250,
-    "color": "Green",
-    "className": "hummel.transport.BicycleAist"
-  },
-  {
-    "price": 350,
-    "color": "Green",
-    "className": "hummel.transport.BicycleStels"
-  },
-  {
-    "price": 18500,
-    "color": "Green",
-    "className": "hummel.transport.CarVolkswagen"
-  },
-  {
-    "price": 6500,
-    "color": "Green",
-    "className": "hummel.transport.CarLada"
-  },
-  {
-    "price": 150,
-    "color": "Blue",
-    "className": "hummel.transport.BicycleAist"
-  },
-  {
-    "price": 250,
-    "color": "Blue",
-    "className": "hummel.transport.BicycleStels"
-  },
-  {
-    "price": 17500,
-    "color": "Blue",
-    "className": "hummel.transport.CarVolkswagen"
-  },
-  {
-    "price": 5500,
-    "color": "Blue",
-    "className": "hummel.transport.CarLada"
-  },
-  {
-    "price": 19000,
-    "color": "Grey",
-    "className": "hummel.transport.CarVolkswagenImproved",
-    "improvement": "Chromed Sportline"
-  },
-  {
-    "price": 7000,
-    "color": "Violet",
-    "className": "hummel.transport.CarLadaImproved",
-    "improvement": "Sedan Baklazhan"
-  },
-  {
-    "price": 0,
-    "color": "0",
-    "className": "plugin.CarRenault"
-  }
+	{
+		"price": 200,
+		"color": "Red",
+		"className": "hummel.transport.BicycleAist"
+	},
+	{
+		"price": 300,
+		"color": "Red",
+		"className": "hummel.transport.BicycleStels"
+	},
+	{
+		"price": 18000,
+		"color": "Red",
+		"className": "hummel.transport.CarVolkswagen"
+	},
+	{
+		"price": 6000,
+		"color": "Red",
+		"className": "hummel.transport.CarLada"
+	},
+	{
+		"price": 250,
+		"color": "Green",
+		"className": "hummel.transport.BicycleAist"
+	},
+	{
+		"price": 350,
+		"color": "Green",
+		"className": "hummel.transport.BicycleStels"
+	},
+	{
+		"price": 18500,
+		"color": "Green",
+		"className": "hummel.transport.CarVolkswagen"
+	},
+	{
+		"price": 6500,
+		"color": "Green",
+		"className": "hummel.transport.CarLada"
+	},
+	{
+		"price": 150,
+		"color": "Blue",
+		"className": "hummel.transport.BicycleAist"
+	},
+	{
+		"price": 250,
+		"color": "Blue",
+		"className": "hummel.transport.BicycleStels"
+	},
+	{
+		"price": 17500,
+		"color": "Blue",
+		"className": "hummel.transport.CarVolkswagen"
+	},
+	{
+		"price": 5500,
+		"color": "Blue",
+		"className": "hummel.transport.CarLada"
+	},
+	{
+		"price": 19000,
+		"color": "Grey",
+		"className": "hummel.transport.CarVolkswagenImproved",
+		"improvement": "Chromed Sportline"
+	},
+	{
+		"price": 7000,
+		"color": "Violet",
+		"className": "hummel.transport.CarLadaImproved",
+		"improvement": "Sedan Baklazhan"
+	},
+	{
+		"price": 0,
+		"color": "0",
+		"className": "plugin.CarRenault"
+	}
 ]
