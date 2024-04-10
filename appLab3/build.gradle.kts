@@ -14,9 +14,9 @@ val embed: Configuration by configurations.creating
 dependencies {
 	embed("org.jetbrains.kotlin:kotlin-stdlib:1.9.23")
 	embed("com.google.code.gson:gson:2.10.1")
-	embed("javax.xml.bind:jaxb-api:2.2.4")
+	embed("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
 	implementation("com.google.code.gson:gson:2.10.1")
-	implementation("javax.xml.bind:jaxb-api:2.2.4")
+	implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
 }
 
 java {
