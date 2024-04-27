@@ -5,8 +5,8 @@ import com.github.hummel.ooptds.lab3.transport.Transport
 import com.github.hummel.ooptds.lab3.utils.JsonUtils
 import com.github.hummel.ooptds.lab3.utils.StandardUtils
 import com.github.hummel.ooptds.lab3.utils.XmlUtils
-import javax.xml.bind.annotation.XmlElementWrapper
-import javax.xml.bind.annotation.XmlRootElement
+import jakarta.xml.bind.annotation.XmlElementWrapper
+import jakarta.xml.bind.annotation.XmlRootElement
 
 fun main() {
 	val type = generateSequence {
@@ -113,7 +113,7 @@ object Shop {
 				item.setImprovement(improvement)
 			}
 			transport.add(item)
-		} catch (e: Exception) {
+		} catch (_: Exception) {
 			println("Class not found!")
 		}
 	}
@@ -160,7 +160,7 @@ object Shop {
 fun readIntSafe(): Int {
 	return try {
 		readln().toInt()
-	} catch (e: Exception) {
+	} catch (_: Exception) {
 		print("Error! Enter the correct value: ")
 		readIntSafe()
 	}

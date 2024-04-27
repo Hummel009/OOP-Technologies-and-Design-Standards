@@ -3,8 +3,8 @@ package com.github.hummel.ooptds.lab3.utils
 import com.github.hummel.ooptds.lab3.Shop
 import com.github.hummel.ooptds.lab3.transport.Transport
 import java.io.File
-import javax.xml.bind.JAXBContext
-import javax.xml.bind.Marshaller
+import jakarta.xml.bind.JAXBContext
+import jakarta.xml.bind.Marshaller
 
 object XmlUtils {
 	fun serialize() {

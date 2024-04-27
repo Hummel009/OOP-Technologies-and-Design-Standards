@@ -27,11 +27,7 @@ abstract class CarBasic(var price: Int = 0, var color: String = "Color", name: S
 
 	fun add(component: Component): Boolean = components.add(component)
 
-	fun remove(component: Component): Boolean = components.remove(component)
-
 	fun addSpeedChangeListener(listener: Listener): Boolean = listeners.add(listener)
-
-	fun removeSpeedChangeListener(listener: Listener): Boolean = listeners.remove(listener)
 
 	fun setEngine(engine: Engine) {
 		this.engine = engine
