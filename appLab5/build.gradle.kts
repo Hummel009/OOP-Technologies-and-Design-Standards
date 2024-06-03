@@ -13,8 +13,8 @@ val embed: Configuration by configurations.creating
 
 dependencies {
 	embed("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
-	embed("com.google.code.gson:gson:2.10.1")
-	implementation("com.google.code.gson:gson:2.10.1")
+	embed("com.google.code.gson:gson:2.11.0")
+	implementation("com.google.code.gson:gson:2.11.0")
 }
 
 java {
