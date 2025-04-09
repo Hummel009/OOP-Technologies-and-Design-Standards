@@ -22,7 +22,7 @@ object XmlUtils {
 			val unmarshaller = context.createUnmarshaller()
 			unmarshaller.unmarshal(File("memory/transports.xml")) as Shop
 			println("List was deserialized.")
-		} catch (e: Exception) {
+		} catch (_: Exception) {
 			Shop.transport.addAll(StandardUtils.defaultList)
 			println("Error! Default list is loaded.")
 		}

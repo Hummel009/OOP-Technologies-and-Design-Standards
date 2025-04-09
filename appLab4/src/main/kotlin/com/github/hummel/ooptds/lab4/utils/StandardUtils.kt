@@ -31,13 +31,13 @@ object StandardUtils {
 
 		try {
 			clazz = Class.forName(idePath)
-		} catch (e: Exception) {
+		} catch (_: Exception) {
 			println("Searching for the jar file...")
 			try {
 				val pluginFile = Shop.plugin?.let { File(it) }
 				val classLoader = URLClassLoader(arrayOf(pluginFile?.toURI()?.toURL()))
 				clazz = classLoader.loadClass(jarPath)
-			} catch (e: Exception) {
+			} catch (_: Exception) {
 				println("Class not found!")
 			}
 		}

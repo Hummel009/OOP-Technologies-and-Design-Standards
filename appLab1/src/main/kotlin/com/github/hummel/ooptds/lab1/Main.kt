@@ -79,7 +79,7 @@ object Shop {
 fun readIntSafe(): Int {
 	return try {
 		readln().toInt()
-	} catch (e: Exception) {
+	} catch (_: Exception) {
 		print("Error! Enter the correct value: ")
 		readIntSafe()
 	}

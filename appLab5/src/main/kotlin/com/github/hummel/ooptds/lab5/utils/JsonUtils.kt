@@ -66,7 +66,7 @@ object JsonUtils {
 				}
 				println("List was deserialized.")
 			}
-		} catch (e: Exception) {
+		} catch (_: Exception) {
 			Shop.transport.addAll(StandardUtils.defaultList)
 			println("Error! Default list is loaded.")
 		}

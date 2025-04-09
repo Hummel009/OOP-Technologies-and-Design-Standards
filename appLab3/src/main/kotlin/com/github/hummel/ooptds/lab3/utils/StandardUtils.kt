@@ -50,7 +50,7 @@ object StandardUtils {
 			objectInputStream.close()
 			fileInputStream.close()
 			println("List was deserialized.")
-		} catch (e: Exception) {
+		} catch (_: Exception) {
 			Shop.transport.addAll(defaultList)
 			println("Error! Default list is loaded.")
 		}

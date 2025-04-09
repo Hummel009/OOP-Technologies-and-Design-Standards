@@ -49,7 +49,7 @@ object Shop {
 			val color = readln()
 			val item = clazz.getConstructor(Int::class.java, String::class.java).newInstance(price, color) as Transport
 			transport.add(item)
-		} catch (e: Exception) {
+		} catch (_: Exception) {
 			println("Class not found!")
 		}
 	}
@@ -96,7 +96,7 @@ object Shop {
 fun readIntSafe(): Int {
 	return try {
 		readln().toInt()
-	} catch (e: Exception) {
+	} catch (_: Exception) {
 		print("Error! Enter the correct value: ")
 		readIntSafe()
 	}

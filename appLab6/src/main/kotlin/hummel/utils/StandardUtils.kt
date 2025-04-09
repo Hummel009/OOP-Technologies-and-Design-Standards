@@ -25,13 +25,13 @@ object StandardUtils {
 
 		try {
 			clazz = Class.forName(idePath)
-		} catch (e: Exception) {
+		} catch (_: Exception) {
 			println("Searching for the plugin...")
 			try {
 				val pluginFile = File(Shop.plugin)
 				val classLoader = URLClassLoader(arrayOf(pluginFile.toURI().toURL()))
 				clazz = classLoader.loadClass(jarPath)
-			} catch (e: Exception) {
+			} catch (_: Exception) {
 				println("Class not found!")
 			}
 		}

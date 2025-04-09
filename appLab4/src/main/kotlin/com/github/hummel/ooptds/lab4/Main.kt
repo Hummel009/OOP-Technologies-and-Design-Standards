@@ -47,7 +47,7 @@ object Shop {
 				val loadMethod = clazz.getDeclaredMethod("load")
 				val loaderInstance = clazz.getConstructor().newInstance()
 				loadMethod.invoke(loaderInstance)
-			} catch (e: Exception) {
+			} catch (_: Exception) {
 				println("This plugin don't exist or has no new functions. That's ok, if plugin contains only objects.")
 			}
 		}
@@ -151,7 +151,7 @@ object Shop {
 fun readIntSafe(): Int {
 	return try {
 		readln().toInt()
-	} catch (e: Exception) {
+	} catch (_: Exception) {
 		print("Error! Enter the correct value: ")
 		readIntSafe()
 	}

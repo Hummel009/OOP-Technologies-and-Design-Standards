@@ -61,10 +61,10 @@ object StandardUtils {
 							} else {
 								try {
 									textContent.toInt()
-								} catch (e: NumberFormatException) {
+								} catch (_: NumberFormatException) {
 									try {
 										textContent.toDouble()
-									} catch (e: NumberFormatException) {
+									} catch (_: NumberFormatException) {
 										textContent
 									}
 								}
@@ -75,7 +75,6 @@ object StandardUtils {
 					}
 					when (propertyValue) {
 						is Boolean -> jsonObject.addProperty(propertyName, propertyValue)
-						is Char -> jsonObject.addProperty(propertyName, propertyValue)
 						is Number -> jsonObject.addProperty(propertyName, propertyValue)
 						is String -> jsonObject.addProperty(propertyName, propertyValue)
 					}
@@ -101,10 +100,10 @@ object StandardUtils {
 				val textContent = itemNode.textContent
 				val itemValue = try {
 					textContent.toInt()
-				} catch (e: NumberFormatException) {
+				} catch (_: NumberFormatException) {
 					try {
 						textContent.toDouble()
-					} catch (e: NumberFormatException) {
+					} catch (_: NumberFormatException) {
 						textContent
 					}
 				}
@@ -175,13 +174,13 @@ object StandardUtils {
 
 		try {
 			clazz = Class.forName(idePath)
-		} catch (e: Exception) {
+		} catch (_: Exception) {
 			println("Searching for the plugin...")
 			try {
 				val pluginFile = Shop.plugin?.let { File(it) }
 				val classLoader = URLClassLoader(arrayOf(pluginFile?.toURI()?.toURL()))
 				clazz = classLoader.loadClass(jarPath)
-			} catch (e: Exception) {
+			} catch (_: Exception) {
 				println("Class not found!")
 			}
 		}
